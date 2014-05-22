@@ -444,7 +444,7 @@ Void response.file(Binary content, Integer status)
 
 ***
 
-## Congiguring Error Handlers
+## Configuring Error Handlers
 
 Server module allows the developer to assigned specific error handling constroller end method based on HTTP response status
 
