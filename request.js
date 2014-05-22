@@ -1,4 +1,4 @@
-var gracenode = require('../gracenode');
+var gracenode = require('../../');
 var logger = gracenode.log.create('server-request');
 var queryDataHandler = require('./queryData');
 var headers = require('./headers');
