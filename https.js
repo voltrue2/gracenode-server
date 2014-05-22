@@ -3,7 +3,7 @@ var util = require('util');
 var https = require('https');
 var EventEmitter = require('events').EventEmitter;
 
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var log = gracenode.log.create('server-https');
 
 var config = null;

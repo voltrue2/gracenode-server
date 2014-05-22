@@ -2,7 +2,7 @@ var util = require('util');
 var http = require('http');
 var EventEmitter = require('events').EventEmitter;
 
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var log = gracenode.log.create('server-http');
 
 var config = null;

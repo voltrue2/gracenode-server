@@ -1,5 +1,4 @@
-
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var log = gracenode.log.create('headers');
 
 var osRegex = /(iPhone|Linux|Windows|iPod|iPad|Macintosh|Android)/i;

@@ -1,4 +1,4 @@
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var logger = gracenode.log.create('server-hook');
 var serverError = require('./error');
 var hooks = null;

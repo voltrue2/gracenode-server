@@ -1,4 +1,4 @@
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var log = gracenode.log.create('server-response');
 var zlib = require('zlib');
 var getMimeType = require('./mime');

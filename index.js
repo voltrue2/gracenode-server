@@ -1,4 +1,3 @@
-
 /**
  * configurations
  * {
@@ -21,7 +20,7 @@
  * }
  * */
 
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var log = gracenode.log.create('server');
 var async = require('async');
 var http = require('./http');

@@ -1,4 +1,4 @@
-var gracenode = require('../../');
+var gracenode = require('../gracenode');
 var logger = gracenode.log.create('server-error');
 var response = require('./response');
 var controller = require('./controller');
