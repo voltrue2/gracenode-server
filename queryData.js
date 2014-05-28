@@ -8,7 +8,15 @@ function Data(dataIn) {
 }
 
 Data.prototype.get = function (key) {
-	return this._data[key] !== undefined ? this._data[key] : null;
+	var res = this._data[key] !== undefined ? this._data[key] : null;
+	if (res) {
+		try {
+			res = JSON.parse(res);
+		} catch (e) {
+			// res is not JSON
+		}
+	}
+	return res;
 };
 
 Data.prototype.getAll = function () {
