@@ -56,7 +56,7 @@ var map = {
 	'x-flv': vd
 };
 
-module.exports = function (fileType) {
+module.exports.get = function (fileType) {
 	// mime type exception handler
 	fileType = checkTypeException(fileType);
 	var prefix = map[fileType] || null;
@@ -64,6 +64,15 @@ module.exports = function (fileType) {
 		return '';
 	}
 	return prefix + fileType;
+};
+
+module.exports.is = function (headers, fileType) {
+	if (headers && headers['content-type']) {
+		if (headers['content-type'].indexOf(fileType) !== -1) {
+			return true;
+		}
+	}
+	return false;
 };
 
 function checkTypeException(type) {

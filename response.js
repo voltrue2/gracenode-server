@@ -1,7 +1,7 @@
 var gracenode = require('../gracenode');
 var log = gracenode.log.create('server-response');
 var zlib = require('zlib');
-var getMimeType = require('./mime');
+var mime = require('./mime');
 
 module.exports.create = function (resource) {
 	return new Response(resource.server, resource.rawRequest, resource.rawResponse, resource.startTime);
@@ -211,7 +211,7 @@ function respondDownload(req, res, content, type, status) {
 			'Cache-Control': 'no-cache, must-revalidate',
 			'Connection': 'Keep-Alive',
 			'Content-Encoding': 'gzip',
-			'Content-Type': getMimeType(type) + '; charset=UTF-8',
+			'Content-Type': mime.get(type) + '; charset=UTF-8',
 			'Pragma': 'no-cache',
 			'Vary': 'Accept-Encoding',
 			'Content-Length': data.length
@@ -241,7 +241,7 @@ function respondFILE(req, res, content, status) {
 	var contentSize = content.length;
 	res.writeHead(status, {
 		'Content-Length': contentSize,
-		'Content-Type': getMimeType(type)
+		'Content-Type': mime.get(type)
 	});
 	
 	log.verbose('response content size: (url:' + req.url + ') ' + (contentSize / 1024) + ' KB');

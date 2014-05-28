@@ -2,6 +2,7 @@ var gracenode = require('../gracenode');
 var logger = gracenode.log.create('server-request');
 var queryDataHandler = require('./queryData');
 var headers = require('./headers');
+var mime = require('./mime');
 var Cookies = require('cookies');
 var queryString = require('querystring');
 var url = require('url');
@@ -64,56 +65,42 @@ Request.prototype.dataAll = function () {
 };
 
 Request.prototype.extractQueries = function (req, cb) {
-
-	if (req.headers['content-type'] && req.headers['content-type'].indexOf('multipart') >= 0) {
-
+	if (mime.is(req.headers, 'multipart')) {
 		var form = new multiparty.Form();
-
 		form.parse(req, function (error, fields, files) {
-
 			if (error) {
 				return cb(error);
 			}
-
 			var obj   = fields;
 			obj.files = [];
-
 			for (var f in files) {
-
 				obj.files.push(files[f][0]);
-
 			}
-
 			cb(null, queryDataHandler.createGetter(obj));
-			
 		});
-
-	} else {
-
-		switch (req.method) {
-			case 'POST':
-				extractReqData(req, cb);
-				break;
-			case 'PUT':
-				extractReqData(req, cb);
-				break;
-			case 'DELETE':
-				extractReqData(req, cb);
-				break;
-			case 'GET':
-				extractReqGETData(req, cb);
-				break;
-			case 'HEAD':
-				extractReqGETData(req, cb);
-				break;
-			default:
-				logger.warning('only POST, PUT, DELETE, HEAD, and GET are supported');
-				cb(null, queryDataHandler.createGetter({}));
-				break;
-		}
-
+		return;
 	}
-	
+	switch (req.method) {
+		case 'POST':
+			extractReqData(req, cb);
+			break;
+		case 'PUT':
+			extractReqData(req, cb);
+			break;
+		case 'DELETE':
+			extractReqData(req, cb);
+			break;
+		case 'GET':
+			extractReqGETData(req, cb);
+			break;
+		case 'HEAD':
+			extractReqGETData(req, cb);
+			break;
+		default:
+			logger.warning('only POST, PUT, DELETE, HEAD, and GET are supported');
+			cb(null, queryDataHandler.createGetter({}));
+			break;
+	}
 };
 
 function extractReqData(req, cb) {
@@ -147,16 +134,13 @@ function extractReqGETData(req, cb) {
 
 function readRequestBody(url, headers, body) {
 	var reqBody;
-
-	if (headers['content-type'] === 'application/json') {
-
+	if (mime.is(headers, 'json')) {
 		try {
 			reqBody = JSON.parse(body);
 		} catch (e) {
 			logger.error('Invalid JSON in request: (url:' + url + ')', body, e);
 			reqBody = {};
 		}
-
 	} else {
 		reqBody = queryString.parse(body);
 	}
