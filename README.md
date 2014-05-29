@@ -38,7 +38,7 @@ gracenode.server
 Configurations
 ```javascript
 "modules": {
-        "server": {
+        "gracenode-server": {
                 "protocol": "http" or "https",
                 "pemKey": "file path to pem key file" // https only
                 "pemCert": "file path to pem cert file" // https only
