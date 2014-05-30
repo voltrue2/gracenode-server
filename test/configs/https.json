@@ -1,6 +1,6 @@
 {
 	"modules": {
-		"server": {
+		"gracenode-server": {
 			"protocol": "https",
 			"host": "localhost",
 			"port": 8090,

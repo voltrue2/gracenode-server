@@ -30,6 +30,7 @@ var hookTest2 = function (req, done) {
 describe('gracenode server module ->', function () {
 
 	console.log('*** NOTICE: This test requires gracenode installed in the same directory as this module.');
+	console.log('*** NOTICE: This test requires gracenode-request installed in the same directory as this module.');
 	
 	it('Can start HTTPS server', function (done) {
 		
@@ -37,21 +38,21 @@ describe('gracenode server module ->', function () {
 		gn.setConfigFiles(['index.json', 'https.json']);
 
 		gn.on('setup.config', function () {
-			var conf = gn.config.getOne('modules.server');
+			var conf = gn.config.getOne('modules.gracenode-server');
 			conf.pemKey = prefix + conf.pemKey;
 			conf.pemCert = prefix + conf.pemCert;
 			conf.controllerPath = prefix + conf.controllerPath;
 		});
 
-		gn.use('request');
-		gn.use('server');
+		gn.use('gracenode-request');
+		gn.use('gracenode-server');
 
 		gn.setup(function (error) {
 			assert.equal(error, undefined);
 			gn.server.setupRequestHooks({
 				hook: hookTest
 			});
-			https += ':' + gn.config.getOne('modules.server.port');
+			https += ':' + gn.config.getOne('modules.gracenode-server.port');
 			gn.server.start();
 			done();
 		});
@@ -64,7 +65,7 @@ describe('gracenode server module ->', function () {
 
 		gn.setup(function (error) {
 			assert.equal(error, undefined);
-			http += ':' + gn.config.getOne('modules.server.port');
+			http += ':' + gn.config.getOne('modules.gracenode-server.port');
 			gn.server.setupRequestHooks({
 				hook: hookTest,
 				hook2: hookTest2
@@ -191,7 +192,7 @@ describe('gracenode server module ->', function () {
 
 	it('Can execute pre-assigned error controller on error status 404', function (done) {
 		// we hack configs
-		gn.config.getOne('modules.server').error['404'] = {
+		gn.config.getOne('modules.gracenode-server').error['404'] = {
 			controller: 'error',
 			method: 'notFound'
 		};
@@ -230,7 +231,7 @@ describe('gracenode server module ->', function () {
 	
 	it('Can fail request hook and execute pre-defined error controller', function (done) {
 		// we hack configs
-		gn.config.getOne('modules.server').error['401'] = {
+		gn.config.getOne('modules.gracenode-server').error['401'] = {
 			controller: 'error',
 			method: 'unauthorized'
 		};
