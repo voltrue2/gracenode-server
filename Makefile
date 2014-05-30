@@ -7,3 +7,9 @@ init:
 	@echo 'install dependencies'
 	npm install
 	@echo 'done'
+
+.PHONY: test
+test:
+	@echo 'test gracenode:'
+	./node_modules/mocha/bin/mocha test/index.js -s 10 -R spec -b
+
