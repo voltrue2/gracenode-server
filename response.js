@@ -251,9 +251,11 @@ function respondFILE(req, res, content, status) {
 }
 
 function respondERROR(req, res, content, status) {
+	var contentType = 'text/plain';
 	content = content || null;
 	if (content !== null && typeof content === 'object') {
 		content = JSON.stringify(content);
+		contentType = 'application/json';
 	}
 	status = status || 400;
 	compressContent(req, content, function (error, data) {
@@ -269,7 +271,7 @@ function respondERROR(req, res, content, status) {
 			'Cache-Control': 'no-cache, must-revalidate',
 			'Connection': 'Keep-Alive',
 			'Content-Encoding': 'gzip',
-			'Content-Type': 'text/plain; charset=UTF-8',
+			'Content-Type': contentType + '; charset=UTF-8',
 			'Pragma': 'no-cache',
 			'Vary': 'Accept-Encoding',
 			'Content-Length': data.length
