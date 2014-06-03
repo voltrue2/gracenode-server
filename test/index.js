@@ -9,7 +9,7 @@ var options = {
 	gzip: true
 };
 
-var hookTest = function (req, done) {
+var hookTest1 = function (req, done) {
 	var result = req.data('result');
 	if (result === 'success') {
 		return done();
@@ -20,7 +20,6 @@ var hookTest = function (req, done) {
 
 var hookTest2 = function (req, done) {
 	var result = req.data('result');
-
 	if (result === 'success') {
 		return done();
 	} else {
@@ -61,7 +60,7 @@ describe('gracenode server module ->', function () {
 		gn.setup(function (error) {
 			assert.equal(error, undefined);
 			gn.server.setupRequestHooks({
-				hook: hookTest
+				hook: hookTest1
 			});
 			https += ':' + gn.config.getOne('modules.gracenode-server.port');
 			gn.server.start();
@@ -78,11 +77,11 @@ describe('gracenode server module ->', function () {
 			assert.equal(error, undefined);
 			http += ':' + gn.config.getOne('modules.gracenode-server.port');
 			gn.server.setupRequestHooks({
-				hook: hookTest,
+				hook: [hookTest1, hookTest2],
 				hook2: hookTest2
 			});
 			gn.server.setupResponseHooks({
-				hook: success,
+				hook: [success, success, success],
 				hook3: failure
 			});
 			gn.server.start();

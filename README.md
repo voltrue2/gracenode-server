@@ -183,6 +183,22 @@ var hooks = {
 gracenode.server.seupRequestHooks(hooks);
 ```
 
+### How to assign multiple hooks
+
+.setupRequestHooks can let you assign more then one hook function to specific controller/method or even to all reuqests:
+
+```
+gracenode.setupRequestHooks({
+	myController: [
+		hook1,
+		hook2,
+		hook3
+	]
+});
+```
+
+The assigned hooks will be executed in the order of the array given.
+
 ***
 
 ### .setupResponseHooks
@@ -211,6 +227,22 @@ gracenode.server.setupResponseHooks({
 	myController: writeTrackingData
 });
 ```
+
+### How to assign multiple hooks
+
+.setupResponseHooks can let you assign more then one hook function to specific controller/method or even to all responses:
+
+```
+gracenode.setupResponseHooks({
+	myController: [
+		hook1,
+		hook2,
+		hook3
+	]
+});
+```
+
+The assigned hooks will be executed in the order of the array given.
 
 ***
 
