@@ -211,6 +211,8 @@ Assign a function to be invoked on every response (each hook callback function i
 
 This is useful when you need to execute certian operation on every request response
 
+The basic behavior of response hooks are very similar to reqest hooks.
+
 Example:
 
 ```
