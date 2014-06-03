@@ -1,5 +1,6 @@
 var assert = require('assert');
 var gn = require('gracenode');
+var request = require('./request');
 var prefix = require('./prefix');
 var http = 'http://localhost';
 var https = 'https://localhost';
@@ -23,8 +24,16 @@ var hookTest2 = function (req, done) {
 	if (result === 'success') {
 		return done();
 	} else {
-		return done(new Error('failed'), 401);
+		return done(new Error('failed'), 403);
 	}
+};
+
+var success = function (req, done) {
+	done();
+};
+
+var failure = function (req, done) {
+	done(new Error('failed'), 400);
 };
 
 describe('gracenode server module ->', function () {
@@ -70,6 +79,10 @@ describe('gracenode server module ->', function () {
 				hook: hookTest,
 				hook2: hookTest2
 			});
+			gn.server.setupResponseHooks({
+				hook: success,
+				hook3: failure
+			});
 			gn.server.start();
 			done();
 		});
@@ -81,7 +94,7 @@ describe('gracenode server module ->', function () {
 			foo: 'FOO'
 		};
 	
-		gn.request.GET(http + '/test/get/one/two/three', args, options, function (error, body, status) {
+		request.GET(http + '/test/get/one/two/three', args, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(status, 200);
 			assert.equal(body.boo, args.boo);
@@ -99,7 +112,7 @@ describe('gracenode server module ->', function () {
 			foo: 'FOO'
 		};
 	
-		gn.request.HEAD(http + '/test/head', args, options, function (error, body, status) {
+		request.HEAD(http + '/test/head', args, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(status, 200);
 			done();
@@ -107,7 +120,7 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can ignore a request', function (done) {
-		gn.request.GET(http + '/ignore/me', {}, options, function (error, body, status) {
+		request.GET(http + '/ignore/me', {}, options, function (error, body, status) {
 			assert.equal(status, 404);
 			done();
 		});
@@ -118,7 +131,7 @@ describe('gracenode server module ->', function () {
 			boo: 'BOO',
 		};
 	
-		gn.request.POST(http + '/test/post', args, options, function (error, body) {
+		request.POST(http + '/test/post', args, options, function (error, body) {
 			assert.equal(error, undefined);
 			assert.equal(body, args.boo);
 			done();
@@ -130,7 +143,7 @@ describe('gracenode server module ->', function () {
 			boo: 'BOO',
 		};
 	
-		gn.request.PUT(http + '/test/put', args, options, function (error, body) {
+		request.PUT(http + '/test/put', args, options, function (error, body) {
 			assert.equal(error, undefined);
 			assert.equal(body, args.boo);
 			done();
@@ -142,14 +155,14 @@ describe('gracenode server module ->', function () {
 			boo: 'BOO',
 		};
 	
-		gn.request.DELETE(http + '/test/delete', args, options, function (error, body) {
+		request.DELETE(http + '/test/delete', args, options, function (error, body) {
 			assert.equal(error, undefined);
 			done();
 		});
 	});
 
 	it('Can respond with 404 on none existing URI', function (done) {
-		gn.request.GET(http + '/blah', {}, options, function (error, body, status) {
+		request.GET(http + '/blah', {}, options, function (error, body, status) {
 			assert(error);
 			assert.equal(status, 404);
 			done();
@@ -157,7 +170,7 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can reroute a request from /take/me to /land/here', function (done) {
-		gn.request.GET(http + '/take/me', {}, options, function (error, body) {
+		request.GET(http + '/take/me', {}, options, function (error, body) {
 			assert.equal(error, undefined);
 			assert.equal(body, 'land/here');
 			done();
@@ -165,7 +178,7 @@ describe('gracenode server module ->', function () {
 	});
 	
 	it('Can reroute a request from / to /land/here', function (done) {
-		gn.request.GET(http, {}, options, function (error, body) {
+		request.GET(http, {}, options, function (error, body) {
 			assert.equal(error, undefined);
 			assert.equal(body, 'land/here');
 			done();
@@ -173,7 +186,7 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can reject wrong request method', function (done) {
-		gn.request.POST(http + '/test/get', {}, options, function (error, body, status) {
+		request.POST(http + '/test/get', {}, options, function (error, body, status) {
 			assert(error);
 			assert.equal(status, 400);
 			assert.equal(body, '/test/get does not accept "POST"');
@@ -182,7 +195,7 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can execute pre-defined error controller on error status 500', function (done) {
-		gn.request.GET(http + '/test/errorOut', {}, options, function (error, body, status) {
+		request.GET(http + '/test/errorOut', {}, options, function (error, body, status) {
 			assert(error);
 			assert.equal(status, 500);
 			assert.equal(body, 'internal error');
@@ -196,7 +209,7 @@ describe('gracenode server module ->', function () {
 			controller: 'error',
 			method: 'notFound'
 		};
-		gn.request.GET(http + '/iAmNotHere', {}, options, function (error, body, status) {
+		request.GET(http + '/iAmNotHere', {}, options, function (error, body, status) {
 			assert(error);
 			assert.equal(status, 404);
 			assert.equal(body, 'not found');
@@ -205,7 +218,7 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can auto look-up index.js for a request /test/', function (done) {
-		gn.request.GET(http + '/test', {}, options, function (error, body, status) {
+		request.GET(http + '/test', {}, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(status, 200);
 			assert.equal(body, 'index');
@@ -214,14 +227,14 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can pass request hook', function (done) {
-		gn.request.POST(http + '/hook/success', { result: 'success' }, options, function (error, body) {
+		request.POST(http + '/hook/success', { result: 'success' }, options, function (error, body) {
 			assert.equal(error, undefined);
 			done();
 		});
 	});
 	
 	it('Can fail request hook', function (done) {
-		gn.request.POST(http + '/hook/failed', { result: 'failed' }, options, function (error, body, status) {
+		request.POST(http + '/hook/failed', { result: 'failed' }, options, function (error, body, status) {
 			assert(error);
 			assert.equal(status, 403);
 			assert.equal(body, 'failed');
@@ -231,14 +244,30 @@ describe('gracenode server module ->', function () {
 	
 	it('Can fail request hook and execute pre-defined error controller', function (done) {
 		// we hack configs
-		gn.config.getOne('modules.gracenode-server').error['401'] = {
+		gn.config.getOne('modules.gracenode-server').error['403'] = {
 			controller: 'error',
 			method: 'unauthorized'
 		};
-		gn.request.POST(http + '/hook2/failed', { result: 'failed' }, options, function (error, body, status) {
+		request.POST(http + '/hook2/failed', { result: 'failed' }, options, function (error, body, status) {
 			assert(error);
-			assert.equal(status, 401);
+			assert.equal(status, 403);
 			assert.equal(body, 'pre-defined fail');
+			done();
+		});
+	});
+	
+	it('Can pass response hook', function (done) {
+		request.POST(http + '/hook/success', { result: 'success' }, options, function (error, body) {
+			assert.equal(error, undefined);
+			done();
+		});
+	});
+	
+	it('Can fail response hook', function (done) {
+		request.GET(http + '/hook3/index', { result: 'success' }, options, function (error, body, status) {
+			assert(error);
+			assert.equal(body, 'failed');
+			assert.equal(status, 400);
 			done();
 		});
 	});

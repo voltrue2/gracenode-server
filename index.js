@@ -29,7 +29,8 @@ var router = require('./router');
 var controller = require('./controller');
 var resource = require('./resource');
 var serverError = require('./error');
-var hook = require('./hook');
+var reqHook = require('./requestHook');
+var resHook = require('./responseHook');
 
 var EventEmitter = require('events').EventEmitter;
 
@@ -79,7 +80,12 @@ hooks: {
 // use case example: session check etc
 module.exports.setupRequestHooks = function (hooks) {
 	log.verbose('setting up request hooks:', hooks);
-	hook.setupRequestHooks(hooks);
+	reqHook.setupRequestHooks(hooks);
+};
+
+module.exports.setupResponseHooks = function (hooks) {
+	log.verbose('setting up response hooks:', hooks);
+	resHook.setupResponseHooks(hooks);
 };
 
 module.exports.start = function () {

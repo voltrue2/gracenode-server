@@ -3,7 +3,7 @@ var log = gracenode.log.create('server-controller');
 var Request = require('./request');
 var response = require('./response');
 var serverError = require('./error');
-var hook = require('./hook');
+var hook = require('./requestHook');
 
 var config = null;
 
@@ -46,7 +46,7 @@ module.exports.handle = function (resource, requestObj) {
 	}
 
 	// create response object
-	var responseObj = response.create(resource);
+	var responseObj = response.create(resource, requestObj);
 
 	// if this is pre-defined error controller, use the assigned status
 	if (resource.error) {

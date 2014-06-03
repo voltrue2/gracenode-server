@@ -1,50 +1,41 @@
 var gracenode = require('../gracenode');
 var log = gracenode.log.create('server-response');
+var hook = require('./responseHook');
 var zlib = require('zlib');
 var mime = require('./mime');
 
-module.exports.create = function (resource) {
-	return new Response(resource.server, resource.rawRequest, resource.rawResponse, resource.startTime);
+module.exports.create = function (resource, requestObj) {
+	return new Response(resource);
 };
 
-function Response(server, request, response, startTime) {
-	this._server = server;
-	this._request = request;
-	this._response = response;
-	this._startTime = startTime;
+function Response(resource, requestObj) {
+	this._resource = resource;
+	this._requestObj = requestObj;
 	this._defaultStatus = 200;
 }
 
 Response.prototype.header = function (name, value) {
-	this._response.setHeader(name, value);
+	this._resource.rawResponse.setHeader(name, value);
 };
 
 Response.prototype.json = function (content, status) {
 	log.verbose('response content type: JSON');
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondJSON(this._request, this._response, content, status || this._defaultStatus);
-	finish(this._request, this._response, this._server);
+	this.respond(null, respondJSON, content, status);
 };
 
 Response.prototype.html = function (content, status) {
 	log.verbose('response content type: HTML');
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondHTML(this._request, this._response, content, status || this._defaultStatus);
-	finish(this._request, this._response, this._server);
+	this.respond(null, respondHTML, content, status);
 };
 
 Response.prototype.data = function (content, status) {
 	log.verbose('response content type: Data');
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondData(this._request, this._response, content, status || this._defaultStatus);
-	finish(this._request, this._response, this._server);
+	this.respond(null, respondData, content, status);
 };
 
 Response.prototype.file = function (content, status) {
 	log.verbose('response content type: File');
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondFILE(this._request, this._response, content, status || this._defaultStatus);
-	finish(this._request, this._response, this._server);
+	this.respond(null, respondFILE, content, status);
 };
 
 Response.prototype.error = function (content, status) {
@@ -54,22 +45,30 @@ Response.prototype.error = function (content, status) {
 Response.prototype.download = function (content, fileName, status) {
 	var fileType = fileName.substring(fileName.lastIndexOf('.') + 1);
 	log.verbose('response content type:', fileType);
-	this.header('Content-Disposition', 'attachment; filename=' + fileName);
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondDownload(this._request, this._response, content, fileType, status || this._defaultStatus);
-	finish(this._request, this._response, this._server);
+	this.respond({ 'Content-Disposition': 'attachment; filename=' + fileName }, respondDownload, content, status);
 };
 
 Response.prototype.redirect = function (content) {
 	log.verbose('response content type: Redirect');
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondRedirect(this._request, this._response, content);
-	finish(this._request, this._response, this._server);
+	this.respond(null, respondRedirect, content, 307);
 };
 
 // internal use only
 Response.prototype._setDefaultStatus = function (status) {
 	this._defaultStatus = status;
+};
+
+Response.prototype.respond = function (headers, respondFunc, content, status) {
+	var that = this;
+	hook.exec(this, function () {
+		// this callback will NOT be executed on error of the hook
+		for (var headerName in headers) {
+			that.header(headerName, headers[headername]);
+		}
+		setupFinish(that._resource.rawRequest, that._resource.rawResponse, that._resource.server, that._resource.startTime);
+		respondFunc(that._resource.rawRequest, that._resource.rawResponse, content, status || that._defaultStatus);
+		finish(that._resource.rawRequest, that._resource.rawResponse, that._resource.server);
+	});
 };
 
 // overrriden by controller
@@ -79,9 +78,9 @@ Response.prototype._errorHandler = function () {
 
 Response.prototype._error = function (content, status) {
 	log.verbose('response content type: Error');
-	setupFinish(this._request, this._response, this._server, this._startTime);
-	respondERROR(this._request, this._response, content, status);
-	finish(this._request, this._response, this._server);
+	setupFinish(this._resource.rawRequest, this._resource.rawResponse, this._resource.server, this._resource.startTime);
+	respondERROR(this._resource.rawRequest, this._resource.rawResponse, content, status);
+	finish(this._resource.rawRequest, this._resource.rawResponse, this._resource.server);
 };
 
 // sets up events for response finish. The events will be called when the request response has all been sent.

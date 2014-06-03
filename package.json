@@ -1,7 +1,7 @@
 {
 	"name": "gracenode-server",
 	"description": "server module for gracenode framework.",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"author": "Nobuyori Takahashi <voltrue2@yahoo.com>",
 	"repository": {
 		"type": "git",
@@ -9,7 +9,8 @@
 	},
 	"dependencies": {
 		"cookies": "0.3.8",
-		"multiparty": "3.2.6"
+		"multiparty": "3.2.6",
+		"request": "2.33.0"
 	},
 	"devDependencies": {
 		"mocha": "1.18.2"

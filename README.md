@@ -185,6 +185,35 @@ gracenode.server.seupRequestHooks(hooks);
 
 ***
 
+### .setupResponseHooks
+
+```
+void setupResponseHooks(Object hooks);
+```
+
+Assign a function to be invoked on every response (each hook callback function is assigned to specific controller method).
+
+This is useful when you need to execute certian operation on every request response
+
+Example:
+
+```
+function writeTrackingData(requestObject) {
+	// write tracking data based on request data
+	if (error) {
+		return cb(new Error('failed'));
+	}
+	// success
+	cb();
+}
+
+gracenode.server.setupResponseHooks({
+	myController: writeTrackingData
+});
+```
+
+***
+
 ## Controller
 Controller handles all requests to server module.
 
