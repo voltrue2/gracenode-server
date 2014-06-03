@@ -29,10 +29,12 @@ var hookTest2 = function (req, done) {
 };
 
 var success = function (req, done) {
+	assert(req);
 	done();
 };
 
 var failure = function (req, done) {
+	assert(req);
 	done(new Error('failed'), 400);
 };
 

@@ -5,7 +5,7 @@ var zlib = require('zlib');
 var mime = require('./mime');
 
 module.exports.create = function (resource, requestObj) {
-	return new Response(resource);
+	return new Response(resource, requestObj);
 };
 
 function Response(resource, requestObj) {
