@@ -78,11 +78,15 @@ describe('gracenode server module ->', function () {
 			http += ':' + gn.config.getOne('modules.gracenode-server.port');
 			gn.server.setupRequestHooks({
 				hook: [hookTest1, hookTest2],
-				hook2: hookTest2
+				hook2: {
+					failed: hookTest2
+				}
 			});
 			gn.server.setupResponseHooks({
 				hook: [success, success, success],
-				hook3: failure
+				hook3: {
+					index: failure
+				}
 			});
 			gn.server.start();
 			done();
