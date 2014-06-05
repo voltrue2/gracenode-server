@@ -23,6 +23,8 @@
 		"gracenode",
 		"framework",
 		"web",
+		"routing",
+		"www",
 		"module",
 		"server",
 		"http",

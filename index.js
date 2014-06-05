@@ -1,25 +1,3 @@
-/**
- * configurations
- * {
- *		"server": {
- *			"protocol": "http" or "https",
-			"pemKey": "path to pem key file", // https only
-			"pemCert": "path to pem cert file", // https only
- *			"port": port number,
- *			"host": "host name or ip address",
- *			"controllerPath": "path to controller directory"
- *			"ignored": ["name of a request you want to ignore", "favicon.ico"]
- *			"error": {
-				"404": { "controller": "errorControllerName", "method": "errorMethod" },
-				"500"...
-			},
-			"reroute": [
-				{ "from": "/", "to": "/another/place/" }
-			]
-		}
- * }
- * */
-
 var gracenode = require('../gracenode');
 var log = gracenode.log.create('server');
 var async = require('async');
