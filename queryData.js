@@ -9,7 +9,7 @@ function Data(dataIn) {
 
 Data.prototype.get = function (key) {
 	var res = this._data[key] !== undefined ? this._data[key] : null;
-	if (res) {
+	if (res && typeof res === 'string') {
 		try {
 			res = JSON.parse(res);
 		} catch (e) {

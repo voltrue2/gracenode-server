@@ -110,6 +110,21 @@ describe('gracenode server module ->', function () {
 			done();
 		});
 	});
+	
+	it('Can read sent data correctly with the correct data type', function (done) {
+		var args = {
+			list: JSON.stringify([1])
+		};
+	
+		request.POST(http + '/test/post2', args, options, function (error, body, status) {
+
+			console.log('>>>>>', error, body);
+
+			assert.equal(error, undefined);
+			assert.equal(body[0], 1);
+			done();
+		});
+	});
 
 	it('Can handle a HEAD request', function (done) {
 		var args = {
