@@ -21,7 +21,7 @@ module.exports.exec = function (resource) {
 		return errorHandler(resource);
 	}
 
-	var request = new Request(resource.rawRequest, resource.rawResponse, resource.parsedUrl.parameters);
+	var request = new Request(resource.rawRequest, resource.rawResponse, resource.parsedUrl.params);
 	request.setup(function (error) {
 		if (error) {
 			return errorHandler(resource);

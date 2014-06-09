@@ -117,9 +117,6 @@ describe('gracenode server module ->', function () {
 		};
 	
 		request.POST(http + '/test/post2', args, options, function (error, body, status) {
-
-			console.log('>>>>>', error, body);
-
 			assert.equal(error, undefined);
 			assert.equal(body[0], 1);
 			done();

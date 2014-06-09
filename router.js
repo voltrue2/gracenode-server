@@ -1,6 +1,6 @@
 var gracenode = require('../gracenode');
 var log = gracenode.log.create('server-router');
-
+var router = require('request-router');
 var EventEmitter = require('events').EventEmitter;
 
 var config = null;
@@ -17,6 +17,8 @@ module.exports.readConfig = function (configIn) {
 			var item = config.reroute[i];
 			rerouteMap[item.from] = item.to;
 		}
+
+		router.setReroutes(rerouteMap);
 
 		log.verbose('rerouting mapped:', rerouteMap);
 	
@@ -43,18 +45,6 @@ module.exports.setup = function (cb) {
 };
 
 module.exports.handle = function (url, res) {
-	
-	var parsedUrl = parseUrl(url);
-	
-	// check rerouting
-	if (config.reroute) {
-		// overwrite it with reroute if found
-		var rerouted = handleReroute(config.reroute, parsedUrl);
-		if (rerouted) {
-			parsedUrl = rerouted;
-		}
-	}
-	
 	// check for ignored request
 	if (config.ignored && isIgnoredRequest(config.ignored, url)) {
 		
@@ -66,61 +56,26 @@ module.exports.handle = function (url, res) {
 
 		return null;
 	}
+	
+	var parsedUrl = router.parse(url);
+	
+	// if there is no method in URL, gracenode will look for index.js
+	if (!parsedUrl.method) {
+		parsedUrl.method = 'index';
+	}
+	
+	// check the controller map
+	if (!controllerMap[parsedUrl.controller]) {
+		parsedUrl.notFound = new Error('controller ' + parsedUrl.controller + ' not found');
+	} else if (!controllerMap[parsedUrl.controller][parsedUrl.method]) {
+		parsedUrl.notFound = new Error('controller method ' + parsedUrl.controller + '/' + parsedUrl.method + ' not found');
+	}
 
 	log.verbose('request resolved:', parsedUrl);
 
 	return parsedUrl;
 
 };
-
-function parseUrl(url) {
-	var queryIndex = url.lastIndexOf('?');
-	if (queryIndex !== -1) {
-		url = url.substring(0, queryIndex);
-	}
-	var splitted = url.split('/');
-	var parsed = splitted.filter(function (item) {
-		if (item !== '') {
-			return item;
-		}
-	});
-
-	var controller = parsed[0] || null;
-	// if there is no method in URL, gracenode will look for index.js
-	var method = parsed[1] || 'index';
-
-	var notFound = null;
-	
-	// check the controller map
-	if (!controllerMap[controller]) {
-		notFound = new Error('controller ' + controller + ' not found');
-	} else if (!controllerMap[controller][method]) {
-		notFound = new Error('controller method ' + controller + '/' + method + ' not found');
-	}
-
-	log.verbose('controller and method found: ', controller + '/' + method);
-	
-	return {
-		controller: controller,
-		method: method,
-		parameters: parsed.length > 2 ? parsed.splice(2) : [],
-		originalRequest: null,
-		notFound: notFound
-	};
-}
-
-function handleReroute(reroute, parsedUrl) {
-	var controller = parsedUrl.controller ? '/' + parsedUrl.controller : '/';
-	var method = ((!parsedUrl.method || parsedUrl.method === 'index') ? '' : '/' + parsedUrl.method);
-	var from = controller + method;
-	if (rerouteMap[from]) {
-		var rerouteTo = rerouteMap[from];
-		log.verbose('rerouting: from "' + from + '" to "' + rerouteTo + '"');
-		return parseUrl(rerouteTo);
-	}
-	// no rerouting
-	return null;
-}
 
 function isIgnoredRequest(ignored, url) {
 	if (Array.isArray(ignored) && ignored.indexOf(url) !== -1) {
