@@ -66,6 +66,8 @@ Response.prototype.respond = function (headers, respondFunc, content, status) {
 		var dupResError = new Error('responded more than once: (url:' + rawReq.url + ') (id:' + rawReq.uniqueId + ')');
 		log.error(dupResError);
 		log.error('content:', content, 'stauts:', (status || 200));
+		// do not send response to the client anymore
+		return;
 	}
 
 	var that = this;
