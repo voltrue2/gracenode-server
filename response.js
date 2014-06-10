@@ -59,6 +59,15 @@ Response.prototype._setDefaultStatus = function (status) {
 };
 
 Response.prototype.respond = function (headers, respondFunc, content, status) {
+	
+	// check for duplicated response
+	if (this._resource.responded) {
+		var rawReq = this._resource.rawRequest;
+		var dupResError = new Error('responded more than once: (url:' + rawReq.url + ') (id:' + rawReq.uniqueId + ')');
+		log.error(dupResError);
+		log.error('content:', content, 'stauts:', (status || 200));
+	}
+
 	var that = this;
 	hook.exec(this, function () {
 		// this callback will NOT be executed on error of the hook
@@ -68,6 +77,7 @@ Response.prototype.respond = function (headers, respondFunc, content, status) {
 		setupFinish(that._resource.rawRequest, that._resource.rawResponse, that._resource.server, that._resource.startTime);
 		respondFunc(that._resource.rawRequest, that._resource.rawResponse, content, status || that._defaultStatus);
 		finish(that._resource.rawRequest, that._resource.rawResponse, that._resource.server);
+		that._resource.responded = true;
 	});
 };
 
@@ -88,7 +98,7 @@ function setupFinish(req, res, server, startTime) {
 	// this will be called when the server sends the response data and finishes it.
 	res.once('finish', function () {
 		var execTime = Date.now() - startTime;
-		var msg = 'request responded: (url:' + req.url + ') (took:' + execTime + 'ms) (status:' + res.statusCode + ')';
+		var msg = 'request responded: (url:' + req.url + ') (id:' + req.uniqueId + ') (took:' + execTime + 'ms) (status:' + res.statusCode + ')';
 		if (res.statusCode > 399) {
 			log.error(msg);	
 		} else {

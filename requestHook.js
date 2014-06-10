@@ -29,7 +29,7 @@ function execHook(hookList, resource, requestObj, responseObj, methodFunc) {
 		hook(requestObj, function (error, status) {
 			count += 1;
 			if (error) {
-				logger.error('request hook #' + count + ' executed with an error (url:' + url + '):', '(status: ' + status + ')');
+				logger.error('request hook #' + count + ' executed with an error (url:' + url + '):', '(id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
 				var sError = serverError.create(resource);
 				sError.setRequest(requestObj);
 				sError.setResponse(responseObj);

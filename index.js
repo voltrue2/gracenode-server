@@ -1,3 +1,4 @@
+var uuid = require('node-uuid');
 var gracenode = require('../gracenode');
 var log = gracenode.log.create('server');
 var async = require('async');
@@ -79,6 +80,10 @@ module.exports.start = function () {
 };
 
 function requestHandler(request, response) {
+	
+	// assign a unique id to each request
+	request.uniqueId = uuid.v4(); 
+
 	module.exports.emit('requestStart', request.url);
 
 	// response module emits server.emit('requestEnd', request.url)

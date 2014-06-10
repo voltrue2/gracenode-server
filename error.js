@@ -52,7 +52,7 @@ ServerError.prototype.handle = function (msg, status) {
 		return controller.exec(this._resource);
 	}
 	if (this._resource.error) {
-		logger.error('pre-defined error controller failed to execute:', '(url:' + this._resource.rawRequest.url + ')', this._resource.error);
+		logger.error('pre-defined error controller failed to execute:', '(url:' + this._resource.rawRequest.url + ')', '(id:' + this._resource.rawRequest.uniqueId + ')', this._resource.error);
 	}
 	// no pre-defined error assigned for this status
 	if (msg instanceof Error) {

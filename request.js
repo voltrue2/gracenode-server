@@ -31,7 +31,7 @@ Request.prototype.setup = function (cb) {
 		}
 		that._dataHandler = dataHandler;
 
-		logger.info('request:', that._method, that.url, that._dataHandler.getAll());
+		logger.info('request:', that._method, that.url, '(id:' + that._request.uniqueId +')', that._dataHandler.getAll());
 
 		cb(null, that);
 	});
