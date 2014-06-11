@@ -74,7 +74,7 @@ Response.prototype.respond = function (headers, respondFunc, content, status) {
 	hook.exec(this, function () {
 		// this callback will NOT be executed on error of the hook
 		for (var headerName in headers) {
-			that.header(headerName, headers[headername]);
+			that.header(headerName, headers[headerName]);
 		}
 		setupFinish(that._resource.rawRequest, that._resource.rawResponse, that._resource.server, that._resource.startTime);
 		respondFunc(that._resource.rawRequest, that._resource.rawResponse, content, status || that._defaultStatus);
