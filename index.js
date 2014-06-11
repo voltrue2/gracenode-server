@@ -84,6 +84,11 @@ function requestHandler(request, response) {
 	// assign a unique id to each request
 	request.uniqueId = uuid.v4(); 
 
+	// listen for unexpected termination of connection
+	response.on('close', function () {
+		log.error('connection closed unexpectedly: (url:' + request.url + ') (id:' + request.uniqueId + ')');
+	});
+
 	module.exports.emit('requestStart', request.url);
 
 	// response module emits server.emit('requestEnd', request.url)
