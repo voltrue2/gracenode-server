@@ -45,7 +45,14 @@ Response.prototype.error = function (content, status) {
 Response.prototype.download = function (content, fileName, status) {
 	var fileType = fileName.substring(fileName.lastIndexOf('.') + 1);
 	log.verbose('response content type:', fileType);
-	this.respond({ 'Content-Disposition': 'attachment; filename=' + fileName }, respondDownload, content, status);
+
+	this.respond({
+
+		'Content-Disposition': 'attachment; filename=' + fileName,
+		'Content-Type': mime.get(fileType) + '; charset=UTF-8',
+
+	}, respondDownload, content, status);
+
 };
 
 Response.prototype.redirect = function (content) {
@@ -208,7 +215,8 @@ function respondData(req, res, content, status) {
 	});
 }
 
-function respondDownload(req, res, content, type, status) {
+function respondDownload(req, res, content, status) {
+
 	content = content || null;
 	compressContent(req, content, function (error, data) {
 		
@@ -222,7 +230,6 @@ function respondDownload(req, res, content, type, status) {
 			'Cache-Control': 'no-cache, must-revalidate',
 			'Connection': 'Keep-Alive',
 			'Content-Encoding': 'gzip',
-			'Content-Type': mime.get(type) + '; charset=UTF-8',
 			'Pragma': 'no-cache',
 			'Vary': 'Accept-Encoding',
 			'Content-Length': data.length
