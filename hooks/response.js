@@ -1,8 +1,8 @@
 var async = require('async');
-var gracenode = require('../gracenode');
+var gracenode = require('../../gracenode');
 var logger = gracenode.log.create('server-response-hook');
-var hookMapper = require('./hookMapper');
-var serverError = require('./error');
+var hookMapper = require('./mapper');
+var serverError = require('../lib/error');
 var hooks = null;
 var hookMap = {};
 
@@ -29,13 +29,13 @@ function execHook(hookList, resource, requestObj, responseObj, cb) {
 		count += 1;
 		hook(requestObj, function (error, status) {
 			if (error) {
-				logger.error('response hook #' + count + ' executed with an error (url:' + url + '):', '(id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
+				logger.error('response hook #' + count + ' executed with an error (url:' + url + '):', '(request-id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
 				var sError = serverError.create(resource);
 				sError.setRequest(requestObj);
 				sError.setResponse(responseObj);
 				return sError.handle(error, status);
 			}
-			logger.verbose('response hook #' + count + ' successfully executed (url:' + url + ')');
+			logger.verbose('response hook #' + count + ' successfully executed (url:' + url + ')', '(request-id:' + resource.rawRequest.uniqueId + ')');
 			next();
 		});
 	}, cb);

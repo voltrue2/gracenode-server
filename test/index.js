@@ -288,5 +288,13 @@ describe('gracenode server module ->', function () {
 			done();
 		});
 	});
+	
+	it('Can catch double responses', function (done) {
+		request.GET(http + '/test/double', {}, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(body.state, 'ok');
+			done();
+		});
+	});
 
 });

@@ -4,12 +4,12 @@ var log = gracenode.log.create('server');
 var async = require('async');
 var http = require('./http');
 var https = require('./https');
-var router = require('./router');
-var controller = require('./controller');
-var resource = require('./resource');
-var serverError = require('./error');
-var reqHook = require('./requestHook');
-var resHook = require('./responseHook');
+var router = require('./lib/router');
+var controller = require('./lib/controller');
+var resource = require('./lib/resource');
+var serverError = require('./lib/error');
+var reqHook = require('./hooks/request');
+var resHook = require('./hooks/response');
 
 var EventEmitter = require('events').EventEmitter;
 
@@ -86,7 +86,7 @@ function requestHandler(request, response) {
 
 	// listen for unexpected termination of connection
 	response.on('close', function () {
-		log.error('connection closed unexpectedly: (url:' + request.url + ') (id:' + request.uniqueId + ')');
+		log.error('connection closed unexpectedly: (url:' + request.url + ') (request-id:' + request.uniqueId + ')');
 	});
 
 	module.exports.emit('requestStart', request.url);
