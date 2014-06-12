@@ -122,6 +122,15 @@ describe('gracenode server module ->', function () {
 			done();
 		});
 	});
+	
+	it('Can read the sent data literally', function (done) {
+		var list = JSON.stringify({a:10,b:'BB',c:'100'});
+		request.POST(http + '/test/post2', { list: list, literal: true }, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(body, list);
+			done();
+		});
+	});
 
 	it('Can handle a HEAD request', function (done) {
 		var args = {
