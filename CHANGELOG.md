@@ -10,13 +10,25 @@ None
 
 ## Changed
 
-#### requestObj.data() now has a new argument
+#### request queires other then GET method, does not auto-type-cast
 
-`requestObj.data(key [string], literal [*boolean])` now has a second argument.
+Example: 
 
-If literal is `true`, the returned value's data type will be the same as sent from the client.
+```
+// request body of POST
+{ "id": "12345" }
+// will be 
+var id = request.data('id');
+// "12345"
+```
 
-By default, literal is false.
+```
+// request query of GET
+?id=12345
+// will be
+var id = request.data('id');
+// 12345
+```
 
 #### Unit test updated
 

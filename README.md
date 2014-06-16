@@ -348,20 +348,6 @@ module.exports.DELETE = function (requestObject, response) {
 };
 ```
 
-### request.data
-
-Returns the value sent from client that matches `key`.
-
-If literal is true, the data type will be kept the same as what the client sent.
-
-If literal is false, the data will be JSON.parsed.
-
-By default, literal is false
-
-```
-mixed request.data(key [string], literal [*boolean])
-```
-
 Example:
 
 ```
