@@ -113,19 +113,19 @@ describe('gracenode server module ->', function () {
 	
 	it('Can read sent data correctly with the correct data type', function (done) {
 		var args = {
-			list: JSON.stringify([1])
+			boo: JSON.stringify([1])
 		};
 	
-		request.POST(http + '/test/post2', args, options, function (error, body, status) {
+		request.GET(http + '/test/get', args, options, function (error, body, status) {
 			assert.equal(error, undefined);
-			assert.equal(body[0], 1);
+			assert.equal(body.boo[0], 1);
 			done();
 		});
 	});
 	
 	it('Can read the sent data literally', function (done) {
 		var list = JSON.stringify({a:10,b:'BB',c:'100'});
-		request.POST(http + '/test/post2', { list: list, literal: true }, options, function (error, body, status) {
+		request.POST(http + '/test/post2', { list: list }, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(body, list);
 			done();
