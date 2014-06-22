@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.20
+
+## Added
+
+None
+
+## Changed
+
+#### none-json request body's data type is now kept correct
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.19
 
 ## Added
