@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.21
+
+## Added
+
+None
+
+## Changed
+
+#### Catches missing controllers when mapping them
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.20
 
 ## Added
