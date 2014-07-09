@@ -2,6 +2,30 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.24
+
+## Added
+
+## Changed
+
+#### HEAD method is now correctly handled
+
+HEAD request method will not receive response data.
+
+HEAD request methods are accepted by GET method controllers.
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
+This is a list of manually mantained changes nad updates for each version.
+
 ## Version 0.1.23
 
 ## Added

@@ -116,7 +116,7 @@ describe('gracenode server module ->', function () {
 			boo: JSON.stringify([1])
 		};
 	
-		request.GET(http + '/test/get', args, options, function (error, body, status) {
+		request.GET(http + '/test/get2', args, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(body.boo[0], 1);
 			done();
@@ -132,7 +132,7 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
-	it('Can handle a HEAD request', function (done) {
+	it('Can handle a HEAD request (controller expects HEAD)', function (done) {
 		var args = {
 			boo: 'BOO',
 			foo: 'FOO'
@@ -212,10 +212,10 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can reject wrong request method', function (done) {
-		request.POST(http + '/test/get', {}, options, function (error, body, status) {
+		request.POST(http + '/test/get2', {}, options, function (error, body, status) {
 			assert(error);
 			assert.equal(status, 400);
-			assert.equal(body, '/test/get does not accept "POST"');
+			assert.equal(body, '/test/get2 does not accept "POST"');
 			done();
 		});
 	});
@@ -304,6 +304,21 @@ describe('gracenode server module ->', function () {
 			assert.equal(body.state, 'ok');
 			done();
 		});
+	});
+
+	it('Can handle a HEAD request', function (done) {
+		var args = {
+			boo: 'BOO',
+			foo: 'FOO'
+		};
+	
+		request.HEAD(http + '/test/get2/one/two/three', args, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body, '');
+			done();
+		});
+		
 	});
 
 });
