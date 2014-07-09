@@ -2,6 +2,24 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.23
+
+## Added
+
+## Changed
+
+#### Minor improvements in lib/request.js for parsing request data
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.22
 
 ## Added
