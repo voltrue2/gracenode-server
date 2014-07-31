@@ -2,6 +2,28 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.25
+
+## Added
+
+#### Request object added requestId property
+
+`request.requestId` is a unique ID per request. Useful for debug logging etc.
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.24
 
 ## Added
