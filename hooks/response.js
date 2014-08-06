@@ -26,10 +26,17 @@ function execHook(hookList, resource, requestObj, responseObj, cb) {
 	var url = resource.rawRequest.url;
 	logger.verbose('response hook found for (url:' + url + ')');
 	async.eachSeries(hookList, function (hook, next) {
+		if (resource.hookErrored) {
+			// response hook(s) errored already, we don't bother
+			return next();
+		}
 		count += 1;
 		hook(requestObj, function (error, status) {
 			if (error) {
 				logger.error('response hook #' + count + ' executed with an error (url:' + url + '):', '(request-id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
+				// to prevent infinite hook error on error response
+				resource.hookErrored = true;
+				// handle error as an error response
 				var sError = serverError.create(resource);
 				sError.setRequest(requestObj);
 				sError.setResponse(responseObj);

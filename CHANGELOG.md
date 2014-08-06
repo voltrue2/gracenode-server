@@ -14,6 +14,10 @@ None
 
 An error response now checks for duplicate response and prevent the server from responding more than once. 
 
+#### Response hooks 
+
+Response hooks now executes on every response that has hooks assigned including error responses.
+
 #### Minor code improvements
 
 ## Deprecated
