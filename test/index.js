@@ -321,4 +321,10 @@ describe('gracenode server module ->', function () {
 		
 	});
 
+	it('Can not call response.error() more than once', function (done) {
+		request.GET(http + '/test/get3', null, options, function (error, body, status) {
+			done();
+		});
+	});
+
 });
