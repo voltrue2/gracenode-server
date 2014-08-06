@@ -2,6 +2,30 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.26
+
+## Added
+
+None
+
+## Changed
+
+#### Duplicate response check added to error response
+
+An error response now checks for duplicate response and prevent the server from responding more than once. 
+
+#### Minor code improvements
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.25
 
 ## Added
