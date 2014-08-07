@@ -59,7 +59,7 @@ describe('gracenode server module ->', function () {
 
 		gn.setup(function (error) {
 			assert.equal(error, undefined);
-			gn.server.setupRequestHooks({
+			gn.server.addRequestHooks({
 				hook: hookTest1
 			});
 			https += ':' + gn.config.getOne('modules.gracenode-server.port');
@@ -76,13 +76,23 @@ describe('gracenode server module ->', function () {
 		gn.setup(function (error) {
 			assert.equal(error, undefined);
 			http += ':' + gn.config.getOne('modules.gracenode-server.port');
-			gn.server.setupRequestHooks({
+			var logger = gn.log.create('all request hook');
+			var logger2 = gn.log.create('all response hook');
+			gn.server.addRequestHooks(function (req, next) {
+				logger.debug('all request hook called');
+				next();
+			});
+			gn.server.addRequestHooks({
 				hook: [hookTest1, hookTest2],
 				hook2: {
 					failed: hookTest2
 				}
 			});
-			gn.server.setupResponseHooks({
+			gn.server.addResponseHooks(function (req, next) {
+				logger2.debug('all response hook called');
+				next();
+			});
+			gn.server.addResponseHooks({
 				hook: [success, success, success],
 				hook3: {
 					index: failure

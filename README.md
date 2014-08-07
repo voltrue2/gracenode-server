@@ -125,10 +125,10 @@ gracenode.setup(function (error) {
 
 ***
 
-### .setupRequestHooks
+### .addRequestHooks
 
 <pre>
-void setupRequestHooks(Object hooks)
+void addRequestHooks(Object hooks)
 </pre>
 
 Assign a function to be invoked on every request (each hook callback function is assigned to specific controller method).
@@ -138,7 +138,12 @@ Should be used for session validatation etc.
 Example:
 
 ```javascript
-// checkSession will be executed on every request for myController/myPage
+// add a hook to all requests
+function hookForAll(request, next) {
+	next();
+}
+gracenode.server.addRequestHooks(hookForAll);
+// checkSession will be executed on every request for myController/myPage after the hook for all requests
 function checkSession(request, callback) {
         var sessionId = request.cookies().get('sessionId');
         gracenode.session.getSession(sessionId, function (error, session) {
@@ -154,7 +159,7 @@ function checkSession(request, callback) {
         });
 }
 // set up the hook
-gracenode.server.setupRequestHooks({
+gracenode.server.addRequestHooks({
         myController: {
                 myPage: checkSession
         }
@@ -169,7 +174,7 @@ var hooks = {
         myController: checkSession
 };
 // set up request hooks
-gracenode.server.seupRequestHooks(hooks);
+gracenode.server.addRequestHooks(hooks);
 ```
 
 ```javascript
@@ -180,15 +185,15 @@ var hooks = {
         }
 };
 // set up request hooks
-gracenode.server.seupRequestHooks(hooks);
+gracenode.server.addRequestHooks(hooks);
 ```
 
 ### How to assign multiple hooks
 
-.setupRequestHooks can let you assign more then one hook function to specific controller/method or even to all reuqests:
+.addRequestHooks can let you assign more then one hook function to specific controller/method or even to all reuqests:
 
 ```
-gracenode.setupRequestHooks({
+gracenode.addRequestHooks({
 	myController: [
 		hook1,
 		hook2,
@@ -201,10 +206,10 @@ The assigned hooks will be executed in the order of the array given.
 
 ***
 
-### .setupResponseHooks
+### .addResponseHooks
 
 ```
-void setupResponseHooks(Object hooks);
+void addResponseHooks(Object hooks);
 ```
 
 Assign a function to be invoked on every response (each hook callback function is assigned to specific controller method).
@@ -216,7 +221,11 @@ The basic behavior of response hooks are very similar to reqest hooks.
 Example:
 
 ```
-function writeTrackingData(requestObject) {
+function hookForAll(request, cb) {
+	cb();
+}
+
+function writeTrackingData(requestObject, cb) {
 	// write tracking data based on request data
 	if (error) {
 		return cb(new Error('failed'));
@@ -225,17 +234,21 @@ function writeTrackingData(requestObject) {
 	cb();
 }
 
-gracenode.server.setupResponseHooks({
+gracenode.server.addResponseHooks(hookForAll);
+
+gracenode.server.addResponseHooks({
 	myController: writeTrackingData
 });
 ```
 
+Above assignment of hooks will execute `hookForAll` on EVERY response and `writeTrackingData` after on `/myController`
+
 ### How to assign multiple hooks
 
-.setupResponseHooks can let you assign more then one hook function to specific controller/method or even to all responses:
+.addResponseHooks can let you assign more then one hook function to specific controller/method or even to all responses:
 
 ```
-gracenode.setupResponseHooks({
+gracenode.addResponseHooks({
 	myController: [
 		hook1,
 		hook2,

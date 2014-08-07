@@ -3,17 +3,18 @@ var gracenode = require('../../gracenode');
 var logger = gracenode.log.create('server-request-hook');
 var serverError = require('../lib/error');
 var hookMapper = require('./mapper');
-var hooks = null;
-var hookMap = {};
+var hookMapList = [];
 
-module.exports.setupRequestHooks = function (hooksIn) {
-	hooks = hooksIn;
-	hookMap = hookMapper.map(hooks);
-	logger.verbose('request hook mapped', hookMap);
+module.exports.addHooks = function (hooks) {
+	hookMapList.push(hookMapper.map(hooks));
+	logger.verbose('request hook mapped and added to hook map list:', hookMapList);
 };
 
+// deprecated
+module.exports.setupRequestHooks = module.exports.addHooks;
+
 module.exports.exec = function (resource, requestObj, responseObj, methodFunc) {
-	var hook = hookMapper.find(hookMap, resource.parsedUrl);
+	var hook = hookMapper.find(hookMapList, resource.parsedUrl);
 	if (hook) {
 		execHook(hook, resource, requestObj, responseObj, methodFunc);
 		return true;

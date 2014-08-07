@@ -6,7 +6,33 @@ This is a list of manually mantained changes nad updates for each version.
 
 ## Added
 
-None
+#### .addRequestHooks and .addResponseHooks added
+
+`addRequestHooks` and `addResponseHooks` added to add hooks on request and response.
+
+The basic usage of these new functions is very similar to deprecated `setupRequestHooks` and `setupResponseHooks`.
+
+The difference is that you may call `addRequestHooks` and `addResponseHooks` more then once.
+
+Example:
+
+```
+function hookForAllRequest(request, next) {
+	// do something
+	next();
+}
+
+function hookForSomeAPI(request, next) {
+	next();
+}
+
+gracenode.server.addRequestHooks(hookForAllRequests);
+gracenode.server.addRequestHooks({
+	helloworld: hookForSomeAPI
+});
+```
+
+The above example assigns a hook to all requests and a hook to `/helloworld`.
 
 ## Changed
 
@@ -22,7 +48,7 @@ Response hooks now executes on every response that has hooks assigned including 
 
 ## Deprecated
 
-None
+#### .setupRequestHooks and .setupResponseHooks deprecated in favor of .addRequestHooks and .addResponseHooks
 
 ## Removed
 

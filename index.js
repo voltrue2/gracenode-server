@@ -48,7 +48,18 @@ module.exports.setup = function (cb) {
 	async.series(list, cb);
 };
 
+module.exports.addRequestHooks = function (hooks) {
+	log.verbose('add request hooks:', hooks);
+	reqHook.addHooks(hooks);
+};
+
+module.exports.addResponseHooks = function (hooks) {
+	log.verbose('add reseponse hooks:', hooks);
+	resHook.addHooks(hooks);
+};
+
 /*
+Deprecated
 hooks: {
 	"<controller name>": {
 		"<method name>": <hook function>

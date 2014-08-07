@@ -3,18 +3,20 @@ var gracenode = require('../../gracenode');
 var logger = gracenode.log.create('server-response-hook');
 var hookMapper = require('./mapper');
 var serverError = require('../lib/error');
-var hooks = null;
-var hookMap = {};
+var hookMapList = [];
 
-module.exports.setupResponseHooks = function (hooksIn) {
-	hooks = hooksIn;
-	hookMap = hookMapper.map(hooks);
+module.exports.addHooks = function (hooks) {
+	hookMapList.push(hookMapper.map(hooks));
+	logger.verbose('response hook mapped and added to hook map list:', hookMapList);
 };
+
+// deprecated
+module.exports.setupResponseHooks = module.exports.addHooks;
 
 module.exports.exec = function (responseObj, cb) {
 	var resource = responseObj._resource;
 	var requestObj = responseObj._requestObj;
-	var hook = hookMapper.find(hookMap, resource.parsedUrl);
+	var hook = hookMapper.find(hookMapList, resource.parsedUrl);
 	if (hook) {
 		return execHook(hook, resource, requestObj, responseObj, cb);
 	}

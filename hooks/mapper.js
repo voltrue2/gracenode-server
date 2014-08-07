@@ -1,6 +1,6 @@
 module.exports.map = mapHooks;
 
-module.exports.find = find;
+module.exports.find = findInList;
 
 function mapHooks(hooks) {
 	var map = {};
@@ -39,6 +39,23 @@ function hasHooks(hooks) {
 	}
 	// no hook(s) found
 	return null;
+}
+
+function findInList(hookMapList, parsed) {
+	var hooks = [];
+	for (var i = 0, len = hookMapList.length; i < len; i++) {
+		var found = find(hookMapList[i], parsed);
+		if (found) {
+			if (!Array.isArray(found)) {
+				found = [found];
+			}
+			hooks = hooks.concat(found);
+		}
+	}
+	if (!hooks.length) {
+		return null;
+	}
+	return hooks;
 }
 
 function find(hookMap, parsed) {
