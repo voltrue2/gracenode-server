@@ -36,6 +36,8 @@ The above example assigns a hook to all requests and a hook to `/helloworld`.
 
 ## Changed
 
+#### Error responses now have request object
+
 #### Duplicate response check added to error response
 
 An error response now checks for duplicate response and prevent the server from responding more than once. 

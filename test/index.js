@@ -89,7 +89,7 @@ describe('gracenode server module ->', function () {
 				}
 			});
 			gn.server.addResponseHooks(function (req, next) {
-				logger2.debug('all response hook called');
+				logger2.debug('all response hook called:', req.url);
 				next();
 			});
 			gn.server.addResponseHooks({
