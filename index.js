@@ -84,7 +84,6 @@ module.exports.start = function () {
 
 	try {
 		server = serverEngine.start(requestHandler);	
-		//setupRequestHandler();
 	} catch (exception) {
 		log.fatal(exception);
 	}

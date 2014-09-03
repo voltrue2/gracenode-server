@@ -2,6 +2,29 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.27
+
+## Added
+
+None
+
+## Changed
+
+#### Redirection now has host in the URL
+
+Bug fix for `response.redirect('/redirect/here')`. The bug was creating an infinite redirection loop
+if the target URL had more than `/controller/method/`.
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.26
 
 ## Added
