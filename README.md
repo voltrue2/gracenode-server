@@ -440,6 +440,10 @@ module.exports.GET = function (requestObject, response) {
 
 Response class manages all server responses to the client requests.
 
+#### response.getRequest
+
+Returns an instance of a request object.
+
 #### response headers
 
 Response headers can be set as shown below.

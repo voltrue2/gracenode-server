@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.28
+
+## Added
+
+#### Response object added a new method getRequest()
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.27
 
 ## Added
