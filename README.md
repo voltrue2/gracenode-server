@@ -373,6 +373,19 @@ module.exports.GET = function (request, response) {
 };
 ```
 
+### Accessing Controller Name and Controller Method Name:
+
+```javascript
+// controller file
+// URI: /test/one/
+module.exports.GET = function (requestObject, response) {
+	console.log(requestObject.controller);
+	// "test"
+	console.log(requestObj.method);
+	// "one"
+}; 
+```
+
 ### Request Headers
 
 Request headers are accessed as:

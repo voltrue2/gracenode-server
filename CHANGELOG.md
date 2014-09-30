@@ -2,6 +2,40 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.31
+
+## Added
+
+#### Request object added new properties controller and method
+
+Requesst object now has 2 new properties to retrieve the controller name and controller method name.
+
+Exmaple:
+
+```
+// URI: /test/one
+module.exports.POST = function (request, response) {
+	console.log(request.controller);
+	// "test"
+	console.log(request.method);
+	// "one"
+};
+```
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.28
 
 ## Added

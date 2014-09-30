@@ -83,9 +83,19 @@ describe('gracenode server module ->', function () {
 				next();
 			});
 			gn.server.addRequestHooks({
-				hook: [hookTest1, hookTest2],
+				hook: [hookTest1, hookTest2, function (req, callback) {
+					assert.equal(req.controller, 'hook');
+					callback();
+				}],
 				hook2: {
 					failed: hookTest2
+				},
+				test: {
+					get: function (req, callback) {
+						assert.equal(req.controller, 'test');
+						assert.equal(req.method, 'get');
+						callback();
+					}
 				}
 			});
 			gn.server.addResponseHooks(function (req, next) {
@@ -98,6 +108,10 @@ describe('gracenode server module ->', function () {
 					index: failure
 				}
 			});
+			var controllerMap = gn.server.getControllerMap();
+			
+			console.log(controllerMap);
+
 			gn.server.start();
 			done();
 		});

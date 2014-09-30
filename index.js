@@ -48,6 +48,10 @@ module.exports.setup = function (cb) {
 	async.series(list, cb);
 };
 
+module.exports.getControllerMap = function () {
+	return router.getControllerMap();
+};
+
 module.exports.addRequestHooks = function (hooks) {
 	log.verbose('add request hooks:', hooks);
 	reqHook.addHooks(hooks);
