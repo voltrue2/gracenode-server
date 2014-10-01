@@ -24,7 +24,7 @@ module.exports.POST = function (request, response) {
 
 ## Changed
 
-None
+#### Minor bug fix in request header verbose logging
 
 ## Deprecated
 
