@@ -259,6 +259,10 @@ gracenode.addResponseHooks({
 
 The assigned hooks will be executed in the order of the array given.
 
+### .getControllerMap
+
+Returns mapped controllers and their methods.
+
 ***
 
 ## Controller
