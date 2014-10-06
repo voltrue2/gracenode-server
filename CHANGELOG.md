@@ -2,6 +2,28 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.32
+
+## Added
+
+None
+
+## Changed
+
+#### Does not log request data as info anymore
+
+For possible security improvement.
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.31
 
 ## Added
