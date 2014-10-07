@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.1.33
+
+## Added
+
+None
+
+## Changed
+
+#### Redirection no longer contains the host name
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.32
 
 ## Added
