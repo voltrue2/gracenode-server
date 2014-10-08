@@ -140,7 +140,7 @@ Example:
 ```javascript
 // add a hook to all requests
 function hookForAll(request, next) {
-	next();
+        next();
 }
 gracenode.server.addRequestHooks(hookForAll);
 // checkSession will be executed on every request for myController/myPage after the hook for all requests
@@ -194,11 +194,11 @@ gracenode.server.addRequestHooks(hooks);
 
 ```
 gracenode.addRequestHooks({
-	myController: [
-		hook1,
-		hook2,
-		hook3
-	]
+        myController: [
+                hook1,
+                hook2,
+                hook3
+        ]
 });
 ```
 
@@ -222,22 +222,22 @@ Example:
 
 ```
 function hookForAll(request, cb) {
-	cb();
+        cb();
 }
 
 function writeTrackingData(requestObject, cb) {
-	// write tracking data based on request data
-	if (error) {
-		return cb(new Error('failed'));
-	}
-	// success
-	cb();
+        // write tracking data based on request data
+        if (error) {
+                return cb(new Error('failed'));
+        }
+        // success
+        cb();
 }
 
 gracenode.server.addResponseHooks(hookForAll);
 
 gracenode.server.addResponseHooks({
-	myController: writeTrackingData
+        myController: writeTrackingData
 });
 ```
 
@@ -249,11 +249,11 @@ Above assignment of hooks will execute `hookForAll` on EVERY response and `write
 
 ```
 gracenode.addResponseHooks({
-	myController: [
-		hook1,
-		hook2,
-		hook3
-	]
+        myController: [
+                hook1,
+                hook2,
+                hook3
+        ]
 });
 ```
 
@@ -282,7 +282,7 @@ module.exports.GET = function (requestObject, serverResponse) {
 // /example/foo/ will display "foo" on your browser
 ```
 
-###Translating request URL to controller/method
+##Translating request URL to controller/method
 
 gracenode's server module translates request URL to route all requests to correct controllers and methods and pass the rest of request parameters to the controller method as reuqest.parameters [array].
 
@@ -300,6 +300,28 @@ module.exports.GET = function (request, response) {
                 "d"
         ]
         */
+};
+```
+
+## Pre-defined URL parameteres
+
+Each controller method can optionally have pre-defined parameter names.
+
+To added pre-defined paramter names, add the following in your controller method:
+
+Example:
+
+```
+// request URL yourapp.com/example/test/myParam1/myParam2/
+module.exports.params = [
+    'foo',
+    'boo'
+];
+module.exports.GET = function (request, response) {
+    var foo = request.getParam('foo');
+    // foo is 'myParam1'
+    var boo = request.getParam('boo');
+    // boo is 'myParam2'
 };
 ```
 
@@ -370,10 +392,10 @@ Example:
 ```
 // sent data from client: { "value": "12345" } with request header Content-Type: application/json
 module.exports.GET = function (request, response) {
-	// this will return "12345"
-	var literalStr = request.data('value', true);
-	// this will return 12345
-	var int = request.data('value');
+        // this will return "12345"
+        var literalStr = request.data('value', true);
+        // this will return 12345
+        var int = request.data('value');
 };
 ```
 
@@ -383,11 +405,11 @@ module.exports.GET = function (request, response) {
 // controller file
 // URI: /test/one/
 module.exports.GET = function (requestObject, response) {
-	console.log(requestObject.controller);
-	// "test"
-	console.log(requestObj.method);
-	// "one"
-}; 
+        console.log(requestObject.controller);
+        // "test"
+        console.log(requestObj.method);
+        // "one"
+};
 ```
 
 ### Request Headers
@@ -523,12 +545,12 @@ Example:
 ```
 // API to download a CSV file format
 module.exports.GET = function (requestObj, response) {
-	var filename = 'test.csv';
-	var csvData = 'columnA,columnB\nAAA,BBB\nCCC,DDD\nEEE,FFF';
-	// set response headers
-	response.header('Content-Disposition', 'attachment; filename=' + filename);
-	response.header('Content-Type', 'csv');
-	response.data(csvData);
+        var filename = 'test.csv';
+        var csvData = 'columnA,columnB\nAAA,BBB\nCCC,DDD\nEEE,FFF';
+        // set response headers
+        response.header('Content-Disposition', 'attachment; filename=' + filename);
+        response.header('Content-Type', 'csv');
+        response.data(csvData);
 };
 ```
 
@@ -744,3 +766,4 @@ gracenode.setup(function () {
         });
 });
 ```
+

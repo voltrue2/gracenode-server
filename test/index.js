@@ -351,4 +351,14 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can read pre-defined paramters by names', function (done) {
+		request.GET(http + '/test/params/foo/boo', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.one, 'foo');
+			assert.equal(body.two, 'boo');
+			done();
+		});
+	});
+
 });

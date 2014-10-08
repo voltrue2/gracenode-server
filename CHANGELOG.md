@@ -2,6 +2,42 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.2.0
+
+## Added
+
+#### Request added getParam() to retrieve pre-defined parameters from the request URL
+
+Controller methods can optionally have pre-defined parameter names by adding the following in the code:
+
+```
+// request URL: yourapp.com/example/test/foo/boo/
+exports.params = [
+	'one',
+	'two'
+];
+exports.GET = function (request, response) {
+	var one = request.getParam('one');
+	// the of one is 'foo'
+	var two = request.getParam('two');
+	// the value of two is 'boo'
+};
+```
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.1.33
 
 ## Added
