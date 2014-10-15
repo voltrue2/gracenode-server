@@ -53,6 +53,26 @@ function Https(requestHandler) {
 
 		log.verbose('starting the server with:', options);
 
+		/**
+		* Fix for Poodle BUG exploit
+		* https://gist.github.com/3rd-Eden/715522f6950044da45d8
+		*/
+		if (config.secureOptions) {
+
+			var constants = require('constants');
+
+			if (constants[config.secureOptions]) {
+
+				options.secureOptions: constants[config.secureOptions];
+
+			} else {
+
+				log.warn('Invalid secureOptions parameter given in config:', config.secureOptions);
+
+			}
+			
+		}
+
 		this.server = https.createServer(options, function (req, res) {
 			requestHandler(req, res);
 		});
