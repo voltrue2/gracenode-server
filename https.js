@@ -63,7 +63,7 @@ function Https(requestHandler) {
 
 			if (constants[config.secureOptions]) {
 
-				options.secureOptions: constants.SSL_OP_NO_SSLv3;
+				options.secureOptions: constants[config.secureOptions];
 
 			} else {
 
