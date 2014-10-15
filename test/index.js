@@ -41,7 +41,8 @@ describe('gracenode server module ->', function () {
 
 	console.log('*** NOTICE: This test requires gracenode installed in the same directory as this module.');
 	console.log('*** NOTICE: This test requires gracenode-request installed in the same directory as this module.');
-	
+
+	/*
 	it('Can start HTTPS server', function (done) {
 		
 		gn.setConfigPath(prefix + 'gracenode-server/test/configs/');
@@ -67,11 +68,22 @@ describe('gracenode server module ->', function () {
 			done();
 		});
 	});
+	*/
 
 	it('Can start HTTP server', function (done) {
 		
 		gn.setConfigPath(prefix + 'gracenode-server/test/configs/');
 		gn.setConfigFiles(['http.json']);
+
+		gn.use('gracenode-request');
+		gn.use('gracenode-server');
+
+		gn.on('setup.config', function () {
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.pemKey = prefix + conf.pemKey;
+			conf.pemCert = prefix + conf.pemCert;
+			conf.controllerPath = prefix + conf.controllerPath;
+		});
 
 		gn.setup(function (error) {
 			assert.equal(error, undefined);
