@@ -42,7 +42,8 @@ Configurations
                 "protocol": "http" or "https",
                 "pemKey": "file path to pem key file" // https only
                 "pemCert": "file path to pem cert file" // https only
-                "port": port number,
+                "secureOptions": "to prevent POODDLE exploit give SSL_OP_NO_SSLv3",  https only
+		"port": port number,
                 "host": host name or IP address,
                 "controllerPath": path to controller directory,
                 "ignored": ['name of ignored URI'...],
