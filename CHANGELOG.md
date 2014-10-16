@@ -2,6 +2,30 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.2.1
+
+## Added
+
+#### Added a new configuration secureOptions for HTTPS server
+
+Added a new optional configuration to prevent POODLE exploit by giving "SSL_OP_SSLv3" to `secureOptions` in
+
+configurations. This will disable SSLv 3.
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.2.0
 
 ## Added
