@@ -341,7 +341,7 @@ module.exports.POST = function (req, res) {
 
 Above example is the controller method for POST requests (POST /example/boo).
 
-If any other request method than POST is sent, the server will response with and error (status 400).
+If any other request method than POST is sent, the server will response with an error (status 400).
 
 ####Request URL
 
@@ -515,7 +515,7 @@ Void response.html(String content, Integer status)
 
 #### response.error
 
-Resonds to the client as an error. content can be JSON, String, Number.
+Responds to the client as an error. content can be JSON, String, Number.
 
 Status code is optional and default is 404.
 
@@ -755,7 +755,7 @@ Example:
 gracenode.setup(function () {
 
         // assign session validation function to all requests under "example" controller
-        gracenode.server.setupRequestHooks({
+        gracenode.server.addRequestHooks({
                 example: function (request, callback) {
                         if (isSessionValid()) {
                                 // session is valid. continue to execute the request
