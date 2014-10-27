@@ -326,6 +326,25 @@ module.exports.GET = function (request, response) {
 };
 ```
 
+##Subdirectories
+
+`gracenode-server` module supports subdirectories in your controller and methods.
+
+For example, a request URI such as `/yourController/yourMethod/sub/foo` would be translated as:
+
+```
+{
+	controller: 'yourController',
+	method: 'yourMethod',
+	params: [
+		'sub',
+		'foo'
+	]
+}
+```
+
+However, by creating a request handing method in `/yourController/yourMethod/sub/foo.js`, server will be executing `/yourController/yourMethod/sub/foo.js` instead of `/yourController/yourMethod.js`.
+
 ##Request Method Restrictions
 
 Each controller method accepts and executes requests with *declared* request method ONLY.

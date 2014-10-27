@@ -373,4 +373,40 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can handle sub directories from the request /test/sub', function (done) {
+		request.GET(http + '/test/sub', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'index');
+			done();
+		});
+	});
+
+	it('Can handle sub directories from the request /test/sub/call', function (done) {
+		request.GET(http + '/test/sub/call', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'call');
+			done();
+		});
+	});
+
+	it('Can handle sub directories from the request /test/sub/sub2', function (done) {
+		request.GET(http + '/test/sub/sub2', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'sub2/index');
+			done();
+		});
+	});
+
+	it('Can handle sub directories from the request /test/sub/sub2/foo', function (done) {
+		request.GET(http + '/test/sub/sub2/foo', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'sub2/foo');
+			done();
+		});
+	});
+
 });

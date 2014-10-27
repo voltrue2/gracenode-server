@@ -2,6 +2,32 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.0
+
+## Added
+
+#### Support for subdirectories in controller/method
+
+`gracenode-server` module now supports a controller method such as `mycontroller/mymethod/sub/executeme.js`.
+
+Subdirectoried methods are still considered to be part of `controller` and its `method`.
+
+The hooks assigned to the `controller` and its `method` will be applied to subdirectoried methods.
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.2.1
 
 ## Added
