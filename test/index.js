@@ -409,4 +409,48 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can handle sub directories from the request /test/sub/one/two with parameters', function (done) {
+		request.GET(http + '/test/sub/one/two', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'index');
+			assert.equal(body.params[0], 'one');
+			assert.equal(body.params[1], 'two');
+			done();
+		});
+	});
+
+	it('Can handle sub directories from the request /test/sub/call/one/two with parameters', function (done) {
+		request.GET(http + '/test/sub/call/one/two', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'call');
+			assert.equal(body.params[0], 'one');
+			assert.equal(body.params[1], 'two');
+			done();
+		});
+	});
+
+	it('Can handle sub directories from the request /test/sub/sub2/one/two with parameters', function (done) {
+		request.GET(http + '/test/sub/sub2/one/two', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'sub2/index');
+			assert.equal(body.params[0], 'one');
+			assert.equal(body.params[1], 'two');
+			done();
+		});
+	});
+
+	it('Can handle sub directories from the request /test/sub/sub2/foo/one/two with parameters', function (done) {
+		request.GET(http + '/test/sub/sub2/foo/one/two', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.method, 'sub2/foo');
+			assert.equal(body.params[0], 'one');
+			assert.equal(body.params[1], 'two');
+			done();
+		});
+	});
+
 });
