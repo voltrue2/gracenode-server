@@ -4,5 +4,5 @@ exports.params = [
 ];
 
 exports.GET = function (req, res) {
-	res.json({ method: 'sub2/index', params: req.parameters });
+	res.json({ key: req.get('key'), method: 'sub2/index', params: req.parameters });
 };

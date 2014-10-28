@@ -10,13 +10,15 @@ This is a list of manually mantained changes nad updates for each version.
 
 `gracenode-server` module now supports a controller method such as `mycontroller/mymethod/sub/executeme.js`.
 
-Subdirectoried methods are still considered to be part of `controller` and its `method`.
+Subdirectory methods are still considered to be part of `controller` and its `method`.
 
-The hooks assigned to the `controller` and its `method` will be applied to subdirectoried methods.
+The hooks assigned to the `controller` and its `method` will be applied to subdirectory methods.
 
 ## Changed
 
-#### Request object .method property now supports subdirectoried methods
+#### Request object .method property now supports subdirectory methods
+
+#### Request and response hooks now support subdirectory methods.
 
 Example:
 

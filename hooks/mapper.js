@@ -11,6 +11,7 @@ function mapHooks(hooks) {
 		return hookAll;
 	}
 	// controller level
+	/*
 	for (var controller in hooks) {
 		var hook = hasHooks(hooks[controller]);
 		if (Array.isArray(hook)) {
@@ -23,10 +24,36 @@ function mapHooks(hooks) {
 			if (Array.isArray(hook)) {
 				// hook(s) for a method of a controller
 				map[controller + '/' + method] = hook;
+				continue;
 			}
 		}
 	}
+	*/
+	for (var controller in hooks) {
+		var hook = hasHooks(hooks[controller]);
+		if (Array.isArray(hook)) {
+			// hook(s) for a controller and all of its methods
+			map[controller] = hook;
+			continue;
+		}
+		traverseHooks(map, hooks[controller], [controller]);
+	}
 	return map;
+}
+
+function traverseHooks(map, hooks, pathList) {
+	for (var key in hooks) {
+		var hookList = hasHooks(hooks[key]);
+		if (Array.isArray(hookList)) {
+			// we don't push to pathList in order to avoid contaminating the pathList array for the other keys in this map
+			var paths = pathList.concat([key]);
+			map[paths.join('/')] = hookList;
+			continue;
+		}
+		// we need to dig deeper in the tier
+		// we don't push to pathList in order to avoid contaminating the pathList array for the other keys in this map
+		traverseHooks(map, hooks[key], pathList.concat([key]));
+	}
 }
 
 function hasHooks(hooks) {
@@ -67,7 +94,7 @@ function find(hookMap, parsed) {
 			hook = hookMap[parsed.controller];
 			if (!Array.isArray(hook)) {
 				// hook a method of a controller
-				hook = hookMap[parsed.controller + '/' + parsed.method];
+				hook = hookMap[parsed.controller + '/' + parsed.method + parsed.subdir];
 			}
 		}
 		// do we have a hook?

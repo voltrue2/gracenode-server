@@ -1,3 +1,3 @@
 exports.GET = function (req, res) {
-	res.json({ method: 'index', params: req.parameters });
+	res.json({ key: req.get('key'), method: 'index', params: req.parameters });
 };

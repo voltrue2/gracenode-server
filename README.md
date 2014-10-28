@@ -343,7 +343,9 @@ For example, a request URI such as `/yourController/yourMethod/sub/foo` would be
 }
 ```
 
-However, by creating a request handing method in `/yourController/yourMethod/sub/foo.js`, server will be executing `/yourController/yourMethod/sub/foo.js` instead of `/yourController/yourMethod.js`.
+However, by creating a request handling method in `/yourController/yourMethod/sub/foo.js`, server will be executing `/yourController/yourMethod/sub/foo.js` instead of `/yourController/yourMethod.js`.
+
+**NOTE:**Both request hooks and response hooks can also be applied to specific subdirectory methods.
 
 ##Request Method Restrictions
 
@@ -432,7 +434,7 @@ module.exports.GET = function (requestObject, response) {
 };
 ```
 
-**NOTE:**Subdirectoried methods would return the path to the subdirectoried method as the method name.
+**NOTE:**Subdirectory methods would return the path to the subdirectory method as the method name.
 
 Example:
 
