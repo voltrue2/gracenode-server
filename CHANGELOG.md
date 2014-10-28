@@ -16,7 +16,17 @@ The hooks assigned to the `controller` and its `method` will be applied to subdi
 
 ## Changed
 
-None
+#### Request object .method property now supports subdirectoried methods
+
+Example:
+
+```
+// Request URI: /test/foo/sub/callme
+exports.GET = function (req, res) {
+	var methodName = req.method;
+	// foo/sub/callme
+};
+```
 
 ## Deprecated
 

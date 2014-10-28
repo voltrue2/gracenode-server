@@ -107,6 +107,14 @@ describe('gracenode server module ->', function () {
 						assert.equal(req.controller, 'test');
 						assert.equal(req.method, 'get');
 						callback();
+					},
+					sub: {
+						sub2: {
+							foo: function (req, callback) {
+								console.log(req);
+								callback();
+							}
+						}
 					}
 				}
 			});

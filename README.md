@@ -432,6 +432,18 @@ module.exports.GET = function (requestObject, response) {
 };
 ```
 
+**NOTE:**Subdirectoried methods would return the path to the subdirectoried method as the method name.
+
+Example:
+
+```
+// URI: /test/sub/foo/
+module.exports.GET = function (requestObject, response) {
+	var methodName = requestObject.method;
+	// sub/foo
+};
+```
+
 ### Request Headers
 
 Request headers are accessed as:
