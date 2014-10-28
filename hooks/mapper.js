@@ -11,24 +11,6 @@ function mapHooks(hooks) {
 		return hookAll;
 	}
 	// controller level
-	/*
-	for (var controller in hooks) {
-		var hook = hasHooks(hooks[controller]);
-		if (Array.isArray(hook)) {
-			// hook(s) for a controller and all of its methods
-			map[controller] = hook;
-			continue;
-		}
-		for (var method in hooks[controller]) {
-			hook = hasHooks(hooks[controller][method]);
-			if (Array.isArray(hook)) {
-				// hook(s) for a method of a controller
-				map[controller + '/' + method] = hook;
-				continue;
-			}
-		}
-	}
-	*/
 	for (var controller in hooks) {
 		var hook = hasHooks(hooks[controller]);
 		if (Array.isArray(hook)) {
