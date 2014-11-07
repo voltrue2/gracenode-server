@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.1
+
+## Added
+
+None
+
+## Changed
+
+#### HTTP status for redirection changed from 301 to 307.
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.0
 
 ## Added

@@ -4,14 +4,7 @@
 			"console": true,
 			"color": true,
 			"depth": 20,
-			"level": {
-				"verbose": true,
-				"debug": true,
-				"info": true,
-				"warning": true,
-				"error": true,
-				"fatal": true
-			}
+			"level": ">= warn"
 		}
 	}
 }
