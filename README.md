@@ -590,7 +590,7 @@ module.exports.GET = function (requestObj, response) {
 
 #### response.redirect
 
-Redirects the request to another URL.
+Redirects the request to another URL with HTTP status 307.
 
 ```javascript
 // controller
