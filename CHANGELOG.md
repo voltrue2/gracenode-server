@@ -2,6 +2,30 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.2
+
+## Added
+
+None
+
+## Changed
+
+#### HTTP status for redirection can be now changed to other status code than 307 by giving a second argument.
+
+```
+response.redirect('/redirect/to/this/page', 301);
+```
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.1
 
 ## Added

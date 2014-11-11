@@ -488,4 +488,22 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can redirect with status 301', function (done) {
+		request.GET(http + '/redirect/perm', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body, 'here');
+			done();
+		});
+	});
+
+	it('Can redirect with status 307', function (done) {
+		request.GET(http + '/redirect/tmp', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body, 'here');
+			done();
+		});
+	});
+
 });

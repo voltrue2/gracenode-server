@@ -600,6 +600,14 @@ module.exports.GET = function (requestObject, response) {
 };
 ```
 
+To redirect with other status code than 307, for example 301:
+
+```javascript
+module.eports.GET = function (requestObject, response) {
+	response.redirect('/redirect/to/this/page', 301);
+};
+```
+
 #### response.file (Not recommanded)
 Resonds to the client as a static file.
 Status code is optional and default is 200.
