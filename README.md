@@ -46,6 +46,7 @@ Configurations
 		"port": port number,
                 "host": host name or IP address,
                 "controllerPath": path to controller directory,
+		"trailingSlash": true/false // if true is given, trailing slash in request URLs are enforced
                 "ignored": ['name of ignored URI'...],
                 "error": {
                         "404": {

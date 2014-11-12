@@ -477,4 +477,12 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can force trailing slash', function (done) {
+		var conf = gn.config.getOne('modules.gracenode-server');
+		conf.trailingSlash = true;
+		request.GET(http + '/redirect/dest', null, options, function (error, body, status) {
+			done();
+		});
+	});
+
 });

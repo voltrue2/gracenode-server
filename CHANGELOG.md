@@ -6,7 +6,9 @@ This is a list of manually mantained changes nad updates for each version.
 
 ## Added
 
-None
+#### Support for enforcing trailing slash in request URLs added
+
+In the configurations, you can now give `trailingSlash: true` to enforce trailing slash in all request URLs.
 
 ## Changed
 

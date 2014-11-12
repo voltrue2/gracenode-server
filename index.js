@@ -94,6 +94,15 @@ module.exports.start = function () {
 };
 
 function requestHandler(request, response) {
+
+	if (config.trailingSlash) {
+		var trailing = request.url.substring(request.url.length - 1);
+		if (trailing !== '/') {
+			log.verbose('enforcing trailing slash on', request.url);
+			response.writeHeader(301, { location: request.url + '/' });
+			return response.end();
+		}
+	}
 	
 	// assign a unique id to each request
 	request.uniqueId = uuid.v4(); 
