@@ -42,34 +42,6 @@ describe('gracenode server module ->', function () {
 	console.log('*** NOTICE: This test requires gracenode installed in the same directory as this module.');
 	console.log('*** NOTICE: This test requires gracenode-request installed in the same directory as this module.');
 
-	/*
-	it('Can start HTTPS server', function (done) {
-		
-		gn.setConfigPath(prefix + 'gracenode-server/test/configs/');
-		gn.setConfigFiles(['index.json', 'https.json']);
-
-		gn.on('setup.config', function () {
-			var conf = gn.config.getOne('modules.gracenode-server');
-			conf.pemKey = prefix + conf.pemKey;
-			conf.pemCert = prefix + conf.pemCert;
-			conf.controllerPath = prefix + conf.controllerPath;
-		});
-
-		gn.use('gracenode-request');
-		gn.use('gracenode-server');
-
-		gn.setup(function (error) {
-			assert.equal(error, undefined);
-			gn.server.addRequestHooks({
-				hook: hookTest1
-			});
-			https += ':' + gn.config.getOne('modules.gracenode-server.port');
-			gn.server.start();
-			done();
-		});
-	});
-	*/
-
 	it('Can start HTTP server', function (done) {
 		
 		gn.setConfigPath(prefix + 'gracenode-server/test/configs/');
@@ -85,8 +57,7 @@ describe('gracenode server module ->', function () {
 			conf.controllerPath = prefix + conf.controllerPath;
 		});
 
-		gn.setup(function (error) {
-			assert.equal(error, undefined);
+		gn.setup(function () {
 			http += ':' + gn.config.getOne('modules.gracenode-server.port');
 			var logger = gn.log.create('all request hook');
 			var logger2 = gn.log.create('all response hook');

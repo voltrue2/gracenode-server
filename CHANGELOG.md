@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.3
+
+## Added
+
+None
+
+## Changed
+
+#### Error log for unexpectly terminated connections now contain request headers
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.2
 
 ## Added
