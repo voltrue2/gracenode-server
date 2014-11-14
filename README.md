@@ -481,7 +481,7 @@ module.exports.GET = function (requestObject, response) {
 };
 ```
 
-**NOTE:**Subdirectory methods would return the path to the subdirectory method as the method name.
+**NOTE:** Subdirectory methods would return the path to the subdirectory method as the method name.
 
 Example:
 
