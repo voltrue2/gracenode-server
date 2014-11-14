@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.4
+
+## Added
+
+#### - Request object added 2 new methods to deal with uploaded files
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.3
 
 ## Added

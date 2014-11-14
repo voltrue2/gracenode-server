@@ -422,6 +422,52 @@ module.exports.GET = function (request, response) {
 };
 ```
 
+### Dealing With Uploaded Files
+
+`gracenode-server` has 2 functions to deal with uploaded files.
+
+The functions are methods of a request object.
+
+####request.moveUploadedFile(path [string], newPath [string], cb [function])
+
+Moves an uploaded file from temporary path to a new location.
+
+Typically, the uploaded files are located in `/tmp/` directory
+
+Example:
+
+```javascript
+exports.PUT = function (request, response) {
+	var files = request.data('files');
+	request.moveUploadedFile(file[0].path, newPath, function (error) {
+		if (error) {
+			return response.error(error, 500);
+		}
+		response.json({ message: 'uploaded' });
+	});
+};
+```
+
+####request.getUploadedFileData(path [string], cb [function])
+
+Reads the data from an uploaded file and deletes the file.
+
+Example:
+
+```javascript
+exports.PUT = function (request, response) {
+	var files = request.data('files');
+	request.getUploadedFileData(files[0].path, function (error, data) {
+		if (error) {
+			return response.error(error, 500);
+		}
+		// do something with the read data...
+		response.json({ message: 'uploaded and read' });
+	});
+	
+};
+```
+
 ### Accessing Controller Name and Controller Method Name:
 
 ```javascript

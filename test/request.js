@@ -48,10 +48,10 @@ function send(url, method, args, options, cb) {
 	var gzip = options.gzip || false;
 	sender(params, function (error, res, body) {
 		if (error) {
-			return cb(error, body, res.statusCode);
+			return cb(error, body, res ? res.statusCode : null);
 		}
 		if (!gzip) {
-			return cb(null, body, res.statusCode);
+			return cb(null, body, res ? res.statusCode : null);
 		}
 		zlib.gunzip(body, function (err, unzipped) {
 			if (err) {

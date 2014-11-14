@@ -482,6 +482,16 @@ describe('gracenode server module ->', function () {
 		conf.trailingSlash = true;
 		request.GET(http + '/redirect/dest', null, options, function (error, body, status) {
 			done();
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.trailingSlash = false;
+		});
+	});
+
+	it('Can move a file', function (done) {
+		request.PUT(http + '/file/upload', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(body.data, 'Hello World');
+			done();
 		});
 	});
 
