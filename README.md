@@ -439,7 +439,7 @@ Example:
 ```javascript
 exports.PUT = function (request, response) {
 	var files = request.data('files');
-	request.moveUploadedFile(file[0].path, newPath, function (error) {
+	request.moveUploadedFile(files[0].path, newPath, function (error) {
 		if (error) {
 			return response.error(error, 500);
 		}
