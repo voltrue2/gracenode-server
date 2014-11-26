@@ -61,12 +61,12 @@ describe('gracenode server module ->', function () {
 			http += ':' + gn.config.getOne('modules.gracenode-server.port');
 			var logger = gn.log.create('all request hook');
 			var logger2 = gn.log.create('all response hook');
-			gn.server.addRequestHooks(function (req, next) {
+			gn.server.addRequestHooks(function reqAllHook(req, next) {
 				logger.debug('all request hook called');
 				next();
 			});
 			gn.server.addRequestHooks({
-				hook: [hookTest1, hookTest2, function (req, callback) {
+				hook: [hookTest1, hookTest2, function hookTest(req, callback) {
 					assert.equal(req.controller, 'hook');
 					callback();
 				}],
@@ -74,24 +74,24 @@ describe('gracenode server module ->', function () {
 					failed: hookTest2
 				},
 				test: {
-					get: function (req, callback) {
+					get: function hookTestForGet(req, callback) {
 						assert.equal(req.controller, 'test');
 						assert.equal(req.method, 'get');
 						callback();
 					},
 					sub: {
 						sub2: {
-							index: function (req, callback) {
+							index: function subSub2IndexHook(req, callback) {
 								req.set('key', 'sub2/index');
 								callback();
 							},
-							foo: function (req, callback) {
+							foo: function subSub2FooHook(req, callback) {
 								req.set('key', 'sub2/foo');
 								console.log(req.controller, req.method);
 								callback();
 							}
 						},
-						index: function (req, callback) {
+						index: function subIndexHook(req, callback) {
 							req.set('key', 'index');
 							console.log('request hook for test/sub/index');
 							callback();
@@ -110,12 +110,12 @@ describe('gracenode server module ->', function () {
 				},
 				test: {
 					sub: {
-						index: function (req, callback) {
+						index: function testSubIndexHook(req, callback) {
 							console.log('response hook on subdirectoried method test/sub/index', req.controller, req.method);
 							callback();
 						},
 						sub2: {
-							foo: function (req, callback) {
+							foo: function testSubSub2FooHook(req, callback) {
 								console.log('response hook for test/sub/sub2/foo');
 								callback();
 							}
@@ -487,7 +487,7 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
-	it('Can move a file', function (done) {
+	it('Can move and read data from a file', function (done) {
 		request.PUT(http + '/file/upload', null, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(body.data, 'Hello World');

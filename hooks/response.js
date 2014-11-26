@@ -35,7 +35,7 @@ function execHook(hookList, resource, requestObj, responseObj, cb) {
 		count += 1;
 		hook(requestObj, function (error, status) {
 			if (error) {
-				logger.error('response hook #' + count + ' executed with an error (url:' + url + '):', '(request-id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
+				logger.error('response hook #' + count + '(' + getHookName(hook) + ') executed with an error (url:' + url + '):', '(request-id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
 				// to prevent infinite hook error on error response
 				resource.hookErrored = true;
 				// handle error as an error response
@@ -44,8 +44,13 @@ function execHook(hookList, resource, requestObj, responseObj, cb) {
 				sError.setResponse(responseObj);
 				return sError.handle(error, status);
 			}
-			logger.verbose('response hook #' + count + ' successfully executed (url:' + url + ')', '(request-id:' + resource.rawRequest.uniqueId + ')');
+			logger.verbose('response hook #' + count + '(' + getHookName(hook) + ') successfully executed (url:' + url + ')', '(request-id:' + resource.rawRequest.uniqueId + ')');
 			next();
 		});
 	}, cb);
 }
+
+function getHookName(hook) {
+	return hook.name || 'anonymous';
+}
+

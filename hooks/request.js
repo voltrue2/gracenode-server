@@ -30,17 +30,21 @@ function execHook(hookList, resource, requestObj, responseObj, methodFunc) {
 		hook(requestObj, function (error, status) {
 			count += 1;
 			if (error) {
-				logger.error('request hook #' + count + ' executed with an error (url:' + url + '):', '(request-id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
+				logger.error('request hook #' + count + '(' + getHookName(hook) + ') executed with an error (url:' + url + '):', '(request-id:' + resource.rawRequest.uniqueId + ')', '(status: ' + status + ')');
 				var sError = serverError.create(resource);
 				sError.setRequest(requestObj);
 				sError.setResponse(responseObj);
 				return sError.handle(error, status);
 			}
-			logger.verbose('request hook #' + count + ' successfully executed (url:' + url + ')', '(request-id:' + resource.rawRequest.uniqueId + ')');
+			logger.verbose('request hook #' + count + '(' + getHookName(hook) + ') successfully executed (url:' + url + ')', '(request-id:' + resource.rawRequest.uniqueId + ')');
 			next();
 		});
 	},
 	function () {
 		methodFunc(requestObj, responseObj);
 	});
+}
+
+function getHookName(hook) {
+	return hook.name || 'anonymous';
 }
