@@ -495,4 +495,21 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can validate expected request data', function (done) {
+		request.GET(http + '/expected/', { id: 100, name: 'foo' }, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			done();
+		});
+	});
+
+	it('Can respond with an error because of missing expected data', function (done) {
+		request.GET(http + '/expected/', { id: 100 }, options, function (error, body, status) {
+			assert(error);
+			assert.equal(body, 'name must be a string');
+			assert.equal(status, 400);
+			done();
+		});
+	});
+
 });

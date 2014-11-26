@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.6
+
+## Added
+
+#### Optional property expected added to every controller method
+
+By providing `exports.expected` object in your controller method, `gracenode-server` can automatically validate incoming request data.
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+***
+
 ## Version 0.3.5
 
 ## Added

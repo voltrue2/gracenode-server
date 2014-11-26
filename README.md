@@ -422,6 +422,37 @@ module.exports.GET = function (request, response) {
 };
 ```
 
+### Auto Request Body Data Validation
+
+`gracenode-server` can optionally validate incoming request data of every request.
+
+To set up auto request body data validation, you must add a property called `expected` in your controller method file.
+
+Exmaple (request URL: /hello/world/):
+
+```
+// each key of expected holds a validation function that returns an error for invalid value
+exports.expected = {
+	message: function validation(value) {
+		if (!value) {
+			return new Error('message must be given');
+		}
+		if (typeof value !== 'string') {
+			return new Error('message must be a string');
+		}
+	}
+};
+exports.GET = function (request, response) {
+	// do something for /hello/world/
+};
+```
+
+The above example defines an expected request body data called `message`.
+
+This API now requires every request to this end point to have `message` and the value of the message **MUST** validate with the associated validation function.
+
+If validation fails, the request will respond with 400 status code. 
+
 ### Dealing With Uploaded Files
 
 `gracenode-server` has 2 functions to deal with uploaded files.
