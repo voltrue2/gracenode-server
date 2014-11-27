@@ -443,7 +443,8 @@ exports.expected = {
 	}
 };
 exports.GET = function (request, response) {
-	// do something for /hello/world/
+	// message has already been validate and it is safe for us to use its value!
+	var message = request.data('message');
 };
 ```
 
