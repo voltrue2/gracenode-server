@@ -63,7 +63,7 @@ function send(url, method, args, options, cb) {
 			} catch (e) {
 				body = unzipped;
 			}
-			cb(res.statusCode > 399 ? new Error(res.statusCode) : null, body, res.statusCode);
+			cb(res.statusCode > 399 ? new Error(res.statusCode) : null, body, res.statusCode, res.headers);
 		});
 	});
 }

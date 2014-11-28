@@ -10,6 +10,8 @@ None
 
 ## Changed
 
+#### Response object's .header() can now change default response headers such as Cache-Control etc
+
 #### Every incoming request now logs request headers as info
 
 ## Deprecated
