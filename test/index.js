@@ -241,6 +241,22 @@ describe('gracenode server module ->', function () {
 			done();
 		});
 	});
+
+	it('Can reroute a request from /take/me to /land/here and carry the original request data', function (done) {
+		request.GET(http + '/take/me?id=1', {}, options, function (error, body) {
+			assert.equal(error, undefined);
+			assert.equal(body, 'land/here1');
+			done();
+		});
+	});
+
+	it('Can reroute a request from /take/me to /land/here and carry the original parameters', function (done) {
+		request.GET(http + '/take/me/100', {}, options, function (error, body) {
+			assert.equal(error, undefined);
+			assert.equal(body, 'land/here100');
+			done();
+		});
+	});
 	
 	it('Can reroute a request from / to /land/here', function (done) {
 		request.GET(http, {}, options, function (error, body) {

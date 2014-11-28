@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.7
+
+## Added
+
+None
+
+## Changed
+
+#### Every incoming request now logs request headers as info
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.6
 
 ## Added
