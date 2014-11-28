@@ -528,7 +528,7 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
-	it('Can overwrite cache-contorl response header', function (done) {
+	it('Can overwrite/remove default response headers', function (done) {
 		request.GET(http + '/test/cache/', null, options, function (error, body, status, headers) {
 			assert.equal(error, undefined);
 			assert.equal(headers['cache-control'], 'private, max-age=6000');

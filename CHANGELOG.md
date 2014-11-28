@@ -2,6 +2,36 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.8
+
+## Added
+
+None
+
+## Changed
+
+#### Response object's .header() can now remove headers by ging either null of undefined value
+
+Example:
+
+```
+exports.GET = function (request, response) {
+	// remove Pragma header
+	response.header('Pragma', null);
+	// do something
+};
+```
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.7
 
 ## Added

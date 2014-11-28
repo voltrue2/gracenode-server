@@ -596,9 +596,11 @@ Response class manages all server responses to the client requests.
 
 Returns an instance of a request object.
 
-#### response headers
+#### response.header
 
-Response headers can be set as shown below.
+Response headers can be set/removed as shown below.
+
+Example for adding a response header
 
 ```javascript
 // controller
@@ -607,6 +609,16 @@ module.exports.GET = function (requestObject, response) {
         response.header('foo', 'foo');
 };
 ```
+
+Example for removing a response header
+
+```javascript
+module.exports.GET = function (requestObject, response) {
+	// remove header
+	response.header('Pragma', null);
+};
+```
+
 #### response.json
 
 Resonds to the client as JSON.
