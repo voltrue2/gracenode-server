@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.9
+
+## Added
+
+None
+
+## Changed
+
+#### response.file() no longer sends Content-Encoding header
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.8
 
 ## Added
