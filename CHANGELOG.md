@@ -12,6 +12,10 @@ None
 
 #### response.file() no longer sends Content-Encoding header
 
+This is a bug fix.
+
+The bug was introduced in version `0.3.8`, by setting the default response headers for all respojnses.
+
 ## Deprecated
 
 None
