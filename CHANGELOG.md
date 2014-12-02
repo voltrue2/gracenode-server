@@ -2,6 +2,28 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.10
+
+## Added
+
+None
+
+## Changed
+
+#### response.json() now sends content-type application/json header again
+
+This is a bug fix that was introduced in `2f9847af4cad3b5515f2525feff03f9b0792fc36`. 
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.9
 
 ## Added

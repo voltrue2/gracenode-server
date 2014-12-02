@@ -536,4 +536,57 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('Can send JSON response with correct response headers', function (done) {
+		request.GET(http + '/content/json', null, options, function (error, body, status, headers) {
+			assert.equal(error, undefined);
+			assert.equal(body.test, true);
+			assert.equal(headers['content-type'], 'application/json; charset=UTF-8');
+			assert.equal(headers['content-encoding'], 'gzip');
+			assert.equal(headers['connection'], 'Keep-Alive');
+			assert(headers['content-length']);
+			assert.equal(status, 200);
+			done();
+		});
+	});
+
+	it('Can send HTML response with correct response headers', function (done) {
+		request.GET(http + '/content/html', null, options, function (error, body, status, headers) {
+			assert.equal(error, undefined);
+			assert.equal(body, '<h1>Hello</h1>');
+			assert.equal(headers['content-type'], 'text/html; charset=UTF-8');
+			assert.equal(headers['content-encoding'], 'gzip');
+			assert.equal(headers['connection'], 'Keep-Alive');
+			assert(headers['content-length']);
+			assert.equal(status, 200);
+			done();
+		});
+	});
+
+	it('Can send data response with correct response headers', function (done) {
+		request.GET(http + '/content/data', null, options, function (error, body, status, headers) {
+			assert.equal(error, undefined);
+			assert.equal(body, 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAG1BMVEX////CQzfCQzfCQzfCQzfCQzfCQzfCQzfCQze4cTvvAAAACHRSTlMAM0Rmd4iqzHMjLxwAAAAuSURBVAhbY2DABhiVoIyMjgIwzdzC0gxmsDYwtOJgRHR0dASAGEC6o4FYBhoAAMUeFRBHLNC5AAAAAElFTkSuQmCC');
+			assert.equal(headers['content-type'], 'image/png');
+			assert.equal(headers['content-encoding'], 'gzip');
+			assert.equal(headers['connection'], 'Keep-Alive');
+			assert(headers['content-length']);
+			assert.equal(status, 200);
+			done();
+		});
+	});
+
+	it('Can send download response with correct response headers', function (done) {
+		request.GET(http + '/content/download', null, options, function (error, body, status, headers) {
+			assert.equal(error, undefined);
+			assert.equal(body, 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAG1BMVEX////CQzfCQzfCQzfCQzfCQzfCQzfCQzfCQze4cTvvAAAACHRSTlMAM0Rmd4iqzHMjLxwAAAAuSURBVAhbY2DABhiVoIyMjgIwzdzC0gxmsDYwtOJgRHR0dASAGEC6o4FYBhoAAMUeFRBHLNC5AAAAAElFTkSuQmCC');
+			assert.equal(headers['content-type'], 'image/png');
+			assert.equal(headers['content-encoding'], 'gzip');
+			assert.equal(headers['content-disposition'], 'attachment; filename=dummy.png');
+			assert.equal(headers['connection'], 'Keep-Alive');
+			assert(headers['content-length']);
+			assert.equal(status, 200);
+			done();
+		});
+	});
+
 });
