@@ -1,9 +1,7 @@
-module.exports.GET = function (req, res) {
+exports.GET = handler;
+exports.POST = handler;
+exports.PUT = handler;
+
+function handler(req, res) {
 	res.json('internal error');
-};
-module.exports.POST = function (req, res) {
-	res.json('internal error');
-};
-module.exports.PUT = function (req, res) {
-	res.json('internal error');
-};
+}

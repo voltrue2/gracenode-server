@@ -2,6 +2,18 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.11
+
+## Added
+
+None
+
+## Changed
+
+#### Bug fix: request.data() does not throw an exception on errored requests
+
+#### Resource Class Refactored
+
 ## Version 0.3.10
 
 ## Added
