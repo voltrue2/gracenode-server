@@ -2,6 +2,25 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.12
+
+## Added
+None
+
+## Changed
+
+#### Dependecny request-router module version updated to 0.2.1
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.11
 
 ## Added
@@ -13,6 +32,16 @@ None
 #### Bug fix: request.data() does not throw an exception on errored requests
 
 #### Resource Class Refactored
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
 
 ## Version 0.3.10
 
