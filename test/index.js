@@ -592,7 +592,8 @@ describe('gracenode server module ->', function () {
 	it('Can force trailing slash', function (done) {
 		var conf = gn.config.getOne('modules.gracenode-server');
 		conf.trailingSlash = true;
-		request.GET(http + '/redirect/dest', null, options, function (error, body, status) {
+		request.GET(http + '/redirect/dest', null, options, function (error, body, status, headers) {
+			assert.equal(headers.url, '/redirect/dest/');
 			done();
 			var conf = gn.config.getOne('modules.gracenode-server');
 			conf.trailingSlash = false;
@@ -602,7 +603,19 @@ describe('gracenode server module ->', function () {
 	it('Can force trailing slash with GET queries', function (done) {
 		var conf = gn.config.getOne('modules.gracenode-server');
 		conf.trailingSlash = true;
-		request.GET(http + '/redirect/dest?example=true', null, options, function (error, body, status) {
+		request.GET(http + '/redirect/dest?example=true', null, options, function (error, body, status, headers) {
+			assert.equal(headers.url, '/redirect/dest/?example=true');
+			done();
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.trailingSlash = false;
+		});
+	});
+
+	it('does not force trailing slash with GET queries and trailing slash', function (done) {
+		var conf = gn.config.getOne('modules.gracenode-server');
+		conf.trailingSlash = true;
+		request.GET(http + '/redirect/dest/?example=true', null, options, function (error, body, status, headers) {
+			assert.equal(headers.url, '/redirect/dest/?example=true');
 			done();
 			var conf = gn.config.getOne('modules.gracenode-server');
 			conf.trailingSlash = false;
