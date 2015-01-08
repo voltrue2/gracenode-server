@@ -600,7 +600,7 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
-	it('Can force trailing slash with GET queries', function (done) {
+	it('Can force trailing slash with GET a query', function (done) {
 		var conf = gn.config.getOne('modules.gracenode-server');
 		conf.trailingSlash = true;
 		request.GET(http + '/redirect/dest?example=true', null, options, function (error, body, status, headers) {
@@ -611,11 +611,33 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
-	it('does not force trailing slash with GET queries and trailing slash', function (done) {
+	it('Can force trailing slash with GET queries', function (done) {
+		var conf = gn.config.getOne('modules.gracenode-server');
+		conf.trailingSlash = true;
+		request.GET(http + '/redirect/dest?example=true&test=1', null, options, function (error, body, status, headers) {
+			assert.equal(headers.url, '/redirect/dest/?example=true&test=1');
+			done();
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.trailingSlash = false;
+		});
+	});
+
+	it('does not force trailing slash with a GET query and trailing slash', function (done) {
 		var conf = gn.config.getOne('modules.gracenode-server');
 		conf.trailingSlash = true;
 		request.GET(http + '/redirect/dest/?example=true', null, options, function (error, body, status, headers) {
 			assert.equal(headers.url, '/redirect/dest/?example=true');
+			done();
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.trailingSlash = false;
+		});
+	});
+
+	it('does not force trailing slash with GET queries and trailing slash', function (done) {
+		var conf = gn.config.getOne('modules.gracenode-server');
+		conf.trailingSlash = true;
+		request.GET(http + '/redirect/dest/?example=true&test=1', null, options, function (error, body, status, headers) {
+			assert.equal(headers.url, '/redirect/dest/?example=true&test=1');
 			done();
 			var conf = gn.config.getOne('modules.gracenode-server');
 			conf.trailingSlash = false;
