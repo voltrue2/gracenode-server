@@ -96,10 +96,13 @@ module.exports.start = function () {
 function requestHandler(request, response) {
 
 	if (config.trailingSlash) {
-		var trailing = request.url.substring(request.url.length - 1);
+		var uriComponents = request.url.split('?');
+		var uri = uriComponents[0];
+		var queries = uriComponents[1] ? '?' + uriComponents[1] : '';
+		var trailing = uri.substring(uri.length - 1);
 		if (trailing !== '/') {
 			log.verbose('enforcing trailing slash on', request.url);
-			response.writeHeader(301, { location: request.url + '/' });
+			response.writeHeader(301, { location: uri + '/' + queries });
 			return response.end();
 		}
 	}

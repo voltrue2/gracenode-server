@@ -493,16 +493,6 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
-	it('Can force trailing slash', function (done) {
-		var conf = gn.config.getOne('modules.gracenode-server');
-		conf.trailingSlash = true;
-		request.GET(http + '/redirect/dest', null, options, function (error, body, status) {
-			done();
-			var conf = gn.config.getOne('modules.gracenode-server');
-			conf.trailingSlash = false;
-		});
-	});
-
 	it('Can move and read data from a file', function (done) {
 		request.PUT(http + '/file/upload', null, options, function (error, body, status) {
 			assert.equal(error, undefined);
@@ -586,6 +576,36 @@ describe('gracenode server module ->', function () {
 			assert(headers['content-length']);
 			assert.equal(status, 200);
 			done();
+		});
+	});
+
+	it('Can read a GET query string with a trailing slash and auto-remove the trailing slash', function (done) {
+		request.GET(http + '/test/get2?boo=BOO&foo=FOO/', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(status, 200);
+			assert.equal(body.boo, 'BOO');
+			assert.equal(body.foo, 'FOO');
+			done();
+		});
+	});
+
+	it('Can force trailing slash', function (done) {
+		var conf = gn.config.getOne('modules.gracenode-server');
+		conf.trailingSlash = true;
+		request.GET(http + '/redirect/dest', null, options, function (error, body, status) {
+			done();
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.trailingSlash = false;
+		});
+	});
+
+	it('Can force trailing slash with GET queries', function (done) {
+		var conf = gn.config.getOne('modules.gracenode-server');
+		conf.trailingSlash = true;
+		request.GET(http + '/redirect/dest?example=true', null, options, function (error, body, status) {
+			done();
+			var conf = gn.config.getOne('modules.gracenode-server');
+			conf.trailingSlash = false;
 		});
 	});
 

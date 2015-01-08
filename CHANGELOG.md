@@ -2,9 +2,44 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.13
+
+## Added
+
+None
+
+## Changed
+
+#### Forcing a trailing slash with GET queries will not be appending a slash at the end, instead it will now be appending it at the end of URI
+
+Example:
+
+`GET /example?test=1` will be `/example/?test=1` instead of `/example?test=1/`.
+
+#### Query values of GET requests will now be removing slashes automatically
+
+Example:
+
+```
+GET /example/?id=1234/
+```
+
+The above request will yeild `id = 1234` instead of `id = "1234/"`.
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.12
 
 ## Added
+
 None
 
 ## Changed
