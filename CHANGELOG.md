@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.14
+
+## Added
+
+None
+
+## Changed
+
+#### Pre-defined error controllers/methods do not inherit subdirectory path
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.13
 
 ## Added
