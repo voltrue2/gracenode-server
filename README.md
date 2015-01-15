@@ -265,6 +265,10 @@ The assigned hooks will be executed in the order of the array given.
 
 Returns mapped controllers and their methods.
 
+### .getEndPointList
+
+Returns an array of all URL endpoints.
+
 ***
 
 ## Controller

@@ -6,7 +6,7 @@ This is a list of manually mantained changes nad updates for each version.
 
 ## Added
 
-None
+#### Added a new function .getEndPointList() to retrieve all URL endpoints as an array
 
 ## Changed
 

@@ -52,6 +52,10 @@ module.exports.getControllerMap = function () {
 	return router.getControllerMap();
 };
 
+module.exports.getEndPointList = function () {
+	return getEndPointListFromControllerMap(router.getControllerMap());
+};
+
 module.exports.addRequestHooks = function (hooks) {
 	log.verbose('add request hooks:', hooks);
 	reqHook.addHooks(hooks);
@@ -92,6 +96,21 @@ module.exports.start = function () {
 		log.fatal(exception);
 	}
 };
+
+function getEndPointListFromControllerMap(map, prefix) {
+	if (!prefix) {
+		prefix = '';
+	}
+	var list = [];
+	for (var key in map) {
+		if (typeof map[key] === 'object') {
+			list = list.concat(getEndPointListFromControllerMap(map[key], prefix + '/' + key));	
+		} else {
+			list.push(prefix + '/' + key + '/');
+		}
+	}
+	return list;
+}
 
 function requestHandler(request, response) {
 

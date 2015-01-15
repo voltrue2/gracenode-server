@@ -644,4 +644,49 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('can get a list of all end points (mapped controllers and their methods)', function () {
+		var list = gn.server.getEndPointList();
+		var expectedList = [
+			'/content/data/',
+			'/content/download/',
+			'/content/html/',
+			'/content/json/',
+			'/error/internal/',
+			'/error/notFound/',
+			'/error/unauthorized/',
+			'/file/upload/',
+			'/expected/index/',
+			'/hook2/failed/',
+			'/hook3/index/',
+			'/hook/failed/',
+			'/hook/success/',
+			'/land/here/',
+			'/redirect/perm/',
+			'/redirect/tmp/',
+			'/redirect/dest/',
+			'/test/cache/',
+			'/test/delete/',
+			'/test/errorOut/',
+			'/test/double/',
+			'/test/get/',
+			'/test/get2/',
+			'/test/get3/',
+			'/test/head/',
+			'/test/index/',
+			'/test/post/',
+			'/test/params/',
+			'/test/post2/',
+			'/test/put/',
+			'/test/sub/call/',
+			'/test/sub/index/',
+			'/test/sub/sub2/foo/',
+			'/test/sub/sub2/index/'
+		];
+		for (var i = 0, len = expectedList.length; i < len; i++) {
+			if (list.indexOf(expectedList[i]) === -1) {
+				throw new Error('endpoint list does not match the expected: ' + expectedList[i]);		
+			}
+		}
+	});
+
 });
