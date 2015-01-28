@@ -45,7 +45,8 @@ Configurations
                 "secureOptions": "to prevent POODDLE exploit give SSL_OP_NO_SSLv3",  https only
 		"port": port number,
                 "host": host name or IP address,
-                "controllerPath": path to controller directory,
+                "urlPrefix": optional prefix in the URL to be ignored when routing requests
+		"controllerPath": path to controller directory,
 		"trailingSlash": true/false // if true is given, trailing slash in request URLs are enforced
                 "ignored": ['name of ignored URI'...],
                 "error": {
@@ -64,6 +65,36 @@ Configurations
                 ]
         }
 }
+```
+
+**URL Prefix**
+
+If `urlPrefix` is set in the configurations, the router of `gracenode-server` module will ignored matched prefix in the URL for routing every request.
+
+Example:
+
+```
+// configurations:
+{
+	"modules": {
+		"gracenode-server": {
+			"protocol": "http",
+			"port": 8000,
+			"urlPrefix": "/dummy/",
+			"host": "localhost",
+			"controllerPath": "controller/"
+		}
+	}
+}
+// incomming request
+POST /dummy/mypage/getmyinfo/
+
+// This request will be routed to:
+/*
+controller: mypage
+method: getmyinfo
+*/
+// /dummy/ will be ignored and discarded
 ```
 
 ***

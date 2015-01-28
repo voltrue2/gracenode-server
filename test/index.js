@@ -689,4 +689,13 @@ describe('gracenode server module ->', function () {
 		}
 	});
 
+	it('can apply URL prefix and route the request correctly', function (done) {
+		request.GET(http + '/dummy/test/params/one/two/', null, options, function (error, body, status, headers) {
+			assert.equal(error, undefined);
+			assert.equal(body.one, 'one');
+			assert.equal(body.two, 'two');
+			done();
+		});
+	});
+
 });

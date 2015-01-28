@@ -2,6 +2,28 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.15
+
+## Added
+
+`urlPrefix` added to configuration.
+
+If `urlPrefix` is given, the matched string in every incomming request URL will be ignored and discarded when routing to controller and method.
+
+## Changed
+
+None
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.14
 
 ## Added
