@@ -131,7 +131,11 @@ function requestHandler(request, response) {
 
 	// listen for unexpected termination of connection
 	response.on('close', function () {
-		log.error('connection closed unexpectedly: (url:' + request.url + ') (request-id:' + request.uniqueId + ')', request.headers);
+		log.error(
+			'connection closed unexpectedly: (url:' + request.url + ') (request-id:' + 
+			request.uniqueId + ')',
+			request.headers
+		);
 	});
 
 	module.exports.emit('requestStart', request.url);
