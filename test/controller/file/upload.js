@@ -1,5 +1,4 @@
 var fs = require('fs');
-var gn = require('gracenode');
 
 exports.PUT = function (req, res) {
 	var now = Date.now();

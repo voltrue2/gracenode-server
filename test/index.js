@@ -3,7 +3,6 @@ var gn = require('gracenode');
 var request = require('./request');
 var prefix = require('./prefix');
 var http = 'http://localhost';
-var https = 'https://localhost';
 
 var options = {
 	gzip: true
@@ -157,6 +156,7 @@ describe('gracenode server module ->', function () {
 	
 		request.GET(http + '/test/get2', args, options, function (error, body, status) {
 			assert.equal(error, undefined);
+			assert.equal(status, 200);
 			assert.equal(body.boo[0], 1);
 			done();
 		});
@@ -166,6 +166,7 @@ describe('gracenode server module ->', function () {
 		var list = JSON.stringify({a:10,b:'BB',c:'100'});
 		request.POST(http + '/test/post2', { list: list }, options, function (error, body, status) {
 			assert.equal(error, undefined);
+			assert.equal(status, 200);
 			assert.equal(body, list);
 			done();
 		});
@@ -220,7 +221,7 @@ describe('gracenode server module ->', function () {
 			boo: 'BOO',
 		};
 	
-		request.DELETE(http + '/test/delete', args, options, function (error, body) {
+		request.DELETE(http + '/test/delete', args, options, function (error) {
 			assert.equal(error, undefined);
 			done();
 		});
@@ -308,7 +309,7 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can pass request hook', function (done) {
-		request.POST(http + '/hook/success', { result: 'success' }, options, function (error, body) {
+		request.POST(http + '/hook/success', { result: 'success' }, options, function (error) {
 			assert.equal(error, undefined);
 			done();
 		});
@@ -338,7 +339,7 @@ describe('gracenode server module ->', function () {
 	});
 	
 	it('Can pass response hook', function (done) {
-		request.POST(http + '/hook/success', { result: 'success' }, options, function (error, body) {
+		request.POST(http + '/hook/success', { result: 'success' }, options, function (error) {
 			assert.equal(error, undefined);
 			done();
 		});
@@ -357,6 +358,7 @@ describe('gracenode server module ->', function () {
 		request.GET(http + '/test/double', {}, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(body.state, 'ok');
+			assert.equal(status, 200);
 			done();
 		});
 	});
@@ -377,7 +379,8 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('Can not call response.error() more than once', function (done) {
-		request.GET(http + '/test/get3', null, options, function (error, body, status) {
+		request.GET(http + '/test/get3', null, options, function (error) {
+			assert(error);
 			done();
 		});
 	});
@@ -496,6 +499,7 @@ describe('gracenode server module ->', function () {
 	it('Can move and read data from a file', function (done) {
 		request.PUT(http + '/file/upload', null, options, function (error, body, status) {
 			assert.equal(error, undefined);
+			assert.equal(status, 200);
 			assert.equal(body.data, 'Hello World');
 			done();
 		});
@@ -532,7 +536,7 @@ describe('gracenode server module ->', function () {
 			assert.equal(body.test, true);
 			assert.equal(headers['content-type'], 'application/json; charset=UTF-8');
 			assert.equal(headers['content-encoding'], 'gzip');
-			assert.equal(headers['connection'], 'Keep-Alive');
+			assert.equal(headers.connection, 'Keep-Alive');
 			assert(headers['content-length']);
 			assert.equal(status, 200);
 			done();
@@ -545,7 +549,7 @@ describe('gracenode server module ->', function () {
 			assert.equal(body, '<h1>Hello</h1>');
 			assert.equal(headers['content-type'], 'text/html; charset=UTF-8');
 			assert.equal(headers['content-encoding'], 'gzip');
-			assert.equal(headers['connection'], 'Keep-Alive');
+			assert.equal(headers.connection, 'Keep-Alive');
 			assert(headers['content-length']);
 			assert.equal(status, 200);
 			done();
@@ -558,7 +562,7 @@ describe('gracenode server module ->', function () {
 			assert.equal(body, 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAG1BMVEX////CQzfCQzfCQzfCQzfCQzfCQzfCQzfCQze4cTvvAAAACHRSTlMAM0Rmd4iqzHMjLxwAAAAuSURBVAhbY2DABhiVoIyMjgIwzdzC0gxmsDYwtOJgRHR0dASAGEC6o4FYBhoAAMUeFRBHLNC5AAAAAElFTkSuQmCC');
 			assert.equal(headers['content-type'], 'image/png');
 			assert.equal(headers['content-encoding'], 'gzip');
-			assert.equal(headers['connection'], 'Keep-Alive');
+			assert.equal(headers.connection, 'Keep-Alive');
 			assert(headers['content-length']);
 			assert.equal(status, 200);
 			done();
@@ -572,7 +576,7 @@ describe('gracenode server module ->', function () {
 			assert.equal(headers['content-type'], 'image/png');
 			assert.equal(headers['content-encoding'], 'gzip');
 			assert.equal(headers['content-disposition'], 'attachment; filename=dummy.png');
-			assert.equal(headers['connection'], 'Keep-Alive');
+			assert.equal(headers.connection, 'Keep-Alive');
 			assert(headers['content-length']);
 			assert.equal(status, 200);
 			done();
@@ -690,10 +694,11 @@ describe('gracenode server module ->', function () {
 	});
 
 	it('can apply URL prefix and route the request correctly', function (done) {
-		request.GET(http + '/dummy/test/params/one/two/', null, options, function (error, body, status, headers) {
+		request.GET(http + '/dummy/test/params/one/two/', null, options, function (error, body, status) {
 			assert.equal(error, undefined);
 			assert.equal(body.one, 'one');
 			assert.equal(body.two, 'two');
+			assert.equal(status, 200);
 			done();
 		});
 	});
