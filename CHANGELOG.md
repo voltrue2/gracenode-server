@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.16
+
+## Added
+
+None
+
+## Changed
+
+#### requestFinish event now emmits response status code as well
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.15
 
 ## Added
