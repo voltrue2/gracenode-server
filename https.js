@@ -49,56 +49,56 @@ function Https(requestHandler) {
 	EventEmitter.call(this);
 	var that = this;
 
-	try {
+	log.verbose('starting the server with:', options);
 
-		log.verbose('starting the server with:', options);
+	/**
+	* Fix for Poodle BUG exploit
+	* https://gist.github.com/3rd-Eden/715522f6950044da45d8
+	*/
+	if (config.secureOptions) {
 
-		/**
-		* Fix for Poodle BUG exploit
-		* https://gist.github.com/3rd-Eden/715522f6950044da45d8
-		*/
-		if (config.secureOptions) {
+		var constants = require('constants');
 
-			var constants = require('constants');
+		if (constants[config.secureOptions]) {
 
-			if (constants[config.secureOptions]) {
+			options.secureOptions = constants[config.secureOptions];
 
-				options.secureOptions = constants[config.secureOptions];
+		} else {
 
-			} else {
+			log.warn('Invalid secureOptions parameter given in config:', config.secureOptions);
 
-				log.warn('Invalid secureOptions parameter given in config:', config.secureOptions);
-
-			}
-			
 		}
-
-		this.server = https.createServer(options, function (req, res) {
-			requestHandler(req, res);
-		});
-		this.server.listen(config.port, config.host);
-
-		// listener for gracenode shutdown
-		gracenode.registerShutdownTask('server-https', function (callback) {
-			try {
-				log.info('stopping server...');
-				that.server.close();
-				log.info('server stopped gracefully: ' + config.host + ':' + config.port);
-				callback();
-			} catch (e) {
-				if (e.message === 'Not running') {
-					log.verbose(e.message);
-					return callback();
-				}
-				callback(e);
-			}
-		});
-
-		log.info('server started:', config.host + ':' + config.port);
-
-	} catch (exception) {
-		gracenode.exit(exception);
+		
 	}
+
+	this.server = https.createServer(options, function (req, res) {
+		requestHandler(req, res);
+	});
+
+	this.server.on('error', function (error) {
+		log.error('server failed:', config.host + ':' + config.port);
+		gracenode.exit(error);
+	});
+
+	this.server.listen(config.port, config.host);
+
+	// listener for gracenode shutdown
+	gracenode.registerShutdownTask('server-https', function (callback) {
+		try {
+			log.info('stopping server...');
+			that.server.close();
+			log.info('server stopped gracefully: ' + config.host + ':' + config.port);
+			callback();
+		} catch (e) {
+			if (e.message === 'Not running') {
+				log.verbose(e.message);
+				return callback();
+			}
+			callback(e);
+		}
+	});
+
+	log.info('server started:', config.host + ':' + config.port);
 }
 
 util.inherits(Https, EventEmitter);

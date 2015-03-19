@@ -21,35 +21,35 @@ module.exports.start = function (requestHandler) {
 function Http(requestHandler) {
 	EventEmitter.call(this);
 	var that = this;
+	
+	this.server = http.createServer(function (req, res) {
+		requestHandler(req, res);
+	});
+	
+	this.server.on('error', function (error) {
+		log.error('server failed:', config.host + ':' + config.port);
+		gracenode.exit(error);
+	});
 
-	try {
+	this.server.listen(config.port, config.host);
 
-		this.server = http.createServer(function (req, res) {
-			requestHandler(req, res);
-		});
-		this.server.listen(config.port, config.host);
-
-		// listener for gracenode shutdown
-		gracenode.registerShutdownTask('http-server', function (callback) {
-			try {
-				log.info('stopping server...');
-				that.server.close();
-				log.info('server stopped gracefully: ' + config.host + ':' + config.port);
-				callback();
-			} catch (e) {
-				if (e.message === 'Not running') {
-					log.verbose(e.message);
-					return callback();
-				}
-				callback(e);
+	// listener for gracenode shutdown
+	gracenode.registerShutdownTask('http-server', function (callback) {
+		try {
+			log.info('stopping server...');
+			that.server.close();
+			log.info('server stopped gracefully: ' + config.host + ':' + config.port);
+			callback();
+		} catch (e) {
+			if (e.message === 'Not running') {
+				log.verbose(e.message);
+				return callback();
 			}
-		});
+			callback(e);
+		}
+	});
 
-		log.info('server started:', config.host + ':' + config.port);
-
-	} catch (exception) {
-		gracenode.exit(exception);
-	}
+	log.info('server started:', config.host + ':' + config.port);
 }
 
 util.inherits(Http, EventEmitter);

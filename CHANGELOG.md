@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.17
+
+## Added
+
+None
+
+## Changed
+
+#### Improved error handling of server failure when starting
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.16
 
 ## Added
