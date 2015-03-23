@@ -2,6 +2,28 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.18
+
+## Added
+
+None
+
+## Changed
+
+#### Bug fix in response.download()
+
+The response headers were incorrectly set.
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.17
 
 ## Added
