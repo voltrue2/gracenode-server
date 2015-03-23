@@ -99,7 +99,7 @@ method: getmyinfo
 
 ***
 
-###SSL server
+### SSL server
 gracenode has bash scripts to help set up HTTPS server.
 <pre>
 gracenode/scripts/sslcertgen.sh //for production
@@ -108,9 +108,9 @@ gracenode/scripts/sslcertgen-dev.sh //for development
 
 ***
 
-###Events
+### Events
 
-####requestStart
+#### requestStart
 
 The event is emitted when a reuqest is received. Passes the request URL.
 ```
@@ -119,7 +119,7 @@ server.on('requestStart', function (requestUrl) {
 });
 ```
 
-####requestEnd
+#### requestEnd
 
 The event is emitted when a request has been handled (not responded). Passes the reuqest URL.
 ```
@@ -128,7 +128,7 @@ server.on('requestEnd', function (requestUrl) {
 });
 ```
 
-####requestFinish
+#### requestFinish
 
 The event is emitted when a request hash been handled and finished sending all response data. Passes the request URL.
 ```
@@ -319,7 +319,7 @@ module.exports.GET = function (requestObject, serverResponse) {
 // /example/foo/ will display "foo" on your browser
 ```
 
-##Translating request URL to controller/method
+## Translating request URL to controller/method
 
 gracenode's server module translates request URL to route all requests to correct controllers and methods and pass the rest of request parameters to the controller method as reuqest.parameters [array].
 
@@ -362,7 +362,7 @@ module.exports.GET = function (request, response) {
 };
 ```
 
-##Subdirectories
+## Subdirectories
 
 `gracenode-server` module supports subdirectories in your controller and methods.
 
@@ -383,7 +383,7 @@ However, by creating a request handling method in `/yourController/yourMethod/su
 
 **NOTE:**Both request hooks and response hooks can also be applied to specific subdirectory methods.
 
-##Request Method Restrictions
+## Request Method Restrictions
 
 Each controller method accepts and executes requests with *declared* request method ONLY.
 
@@ -400,7 +400,7 @@ Above example is the controller method for POST requests (POST /example/boo).
 
 If any other request method than POST is sent, the server will response with an error (status 400).
 
-####Request URL
+#### Request URL
 
 Request URL can be accessed as shown below.
 
@@ -410,7 +410,7 @@ module.exports.GET = function (requestObject, response) {
 };
 ```
 
-####How to read GET, POST, PUT, and DELETE
+#### How to read GET, POST, PUT, and DELETE
 
 Request data can be accessed according to the request methods as shown below.
 
@@ -495,7 +495,7 @@ If validation fails, the request will respond with 400 status code.
 
 The functions are methods of a request object.
 
-####request.moveUploadedFile(path [string], newPath [string], cb [function])
+#### request.moveUploadedFile(path [string], newPath [string], cb [function])
 
 Moves an uploaded file from temporary path to a new location.
 
@@ -515,7 +515,7 @@ exports.PUT = function (request, response) {
 };
 ```
 
-####request.getUploadedFileData(path [string], cb [function])
+#### request.getUploadedFileData(path [string], cb [function])
 
 Reads the data from an uploaded file and deletes the file.
 
