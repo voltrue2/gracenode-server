@@ -2,6 +2,28 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.3.19
+
+## Added
+
+None
+
+## Changed
+
+#### Both HTTP and HTTPS servers added proper listener on server started
+
+#### README format is now compatible with new npm site
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.18
 
 ## Added

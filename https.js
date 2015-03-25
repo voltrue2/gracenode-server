@@ -75,6 +75,10 @@ function Https(requestHandler) {
 		requestHandler(req, res);
 	});
 
+	this.server.on('listening', function () {
+		log.info('server started:', config.host + ':' + config.port);
+	});
+
 	this.server.on('error', function (error) {
 		log.error('server failed:', config.host + ':' + config.port);
 		gracenode.exit(error);
@@ -98,7 +102,7 @@ function Https(requestHandler) {
 		}
 	});
 
-	log.info('server started:', config.host + ':' + config.port);
+	log.info('server starting:', config.host + ':' + config.port);
 }
 
 util.inherits(Https, EventEmitter);
