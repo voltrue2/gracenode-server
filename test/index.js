@@ -703,4 +703,25 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('can get 400 response when sending a request with an incorrect method', function (done) {
+		request.PUT(http + '/dummy/test/params/one/two/', null, options, function (error, body, status) {
+			assert(error);
+			assert(body);
+			assert.equal(status, 400);
+			done();
+		});
+	});
+
+	it('can auto decode encoded URI paramteres', function (done) {
+		var one = '日本語　英語';
+		var two = '<html> test\test"test"';
+		request.GET(http + '/dummy/test/params/' + encodeURIComponent(one) + '/' + encodeURIComponent(two) + '/', null, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(body.one, one);
+			assert.equal(body.two, two);
+			assert.equal(status, 200);
+			done();
+		});
+	});
+
 });

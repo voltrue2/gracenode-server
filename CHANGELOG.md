@@ -2,6 +2,30 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.4.0
+
+## Added
+
+None
+
+## Changed
+
+#### Auto decode encoded URI for URL parameters
+
+#### Updated a dependency request-router version to 0.2.2
+
+#### Warning log for invalid request method has more detailed information
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.3.19
 
 ## Added
