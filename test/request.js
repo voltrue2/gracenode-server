@@ -17,6 +17,10 @@ module.exports.PUT = function (url, args, options, cb) {
 	send(url, 'put', args, options, cb);
 };
 
+module.exports.PATCH = function (url, args, options, cb) {
+	send(url, 'patch', args, options, cb);
+};
+
 module.exports.DELETE = function (url, args, options, cb) {
 	send(url, 'del', args, options, cb);
 };

@@ -724,4 +724,14 @@ describe('gracenode server module ->', function () {
 		});
 	});
 
+	it('can handle a PATCH request', function (done) {
+		var data = 'pathDATA';
+		request.PATCH(http + '/patch/index/', { data: data }, options, function (error, body, status) {
+			assert.equal(error, undefined);
+			assert.equal(body.data, data);
+			assert.equal(status, 200);
+			done();
+		});	
+	});
+ 
 });
