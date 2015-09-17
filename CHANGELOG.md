@@ -2,6 +2,24 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.4.2
+
+## Added
+
+None
+
+## Changed
+
+#### Corrected response status code for invalid request method from 400 to 405
+
+## Deprecated
+
+None
+
+## Removed
+
+***
+
 ## Version 0.4.1
 
 ## Added

@@ -270,7 +270,7 @@ describe('gracenode server module ->', function () {
 	it('Can reject wrong request method', function (done) {
 		request.POST(http + '/test/get2', {}, options, function (error, body, status) {
 			assert(error);
-			assert.equal(status, 400);
+			assert.equal(status, 405);
 			assert.equal(body, '/test/get2 does not accept "POST"');
 			done();
 		});
@@ -707,7 +707,7 @@ describe('gracenode server module ->', function () {
 		request.PUT(http + '/dummy/test/params/one/two/', null, options, function (error, body, status) {
 			assert(error);
 			assert(body);
-			assert.equal(status, 400);
+			assert.equal(status, 405);
 			done();
 		});
 	});
