@@ -682,6 +682,18 @@ Status code is optional and default is 404.
 Void response.error(Mixed content, Integer status)
 </pre>
 
+#### response.stream
+
+Streams a file to the client.
+
+If request header contains `range` header, it will stream with `status 206`.
+
+<pre>
+Void response.stream(String filePath, String fileType)
+</pre>
+
+**NOTE**: File types are: mp4, ogg etc.
+
 #### response.download
 
 Let the client download data as a file.

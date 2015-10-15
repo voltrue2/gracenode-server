@@ -53,7 +53,7 @@ describe('gracenode server module ->', function () {
 			var conf = gn.config.getOne('modules.gracenode-server');
 			conf.pemKey = prefix + conf.pemKey;
 			conf.pemCert = prefix + conf.pemCert;
-			conf.controllerPath = prefix + conf.controllerPath;
+			conf.controllerPath = __dirname + conf.controllerPath;
 		});
 
 		gn.setup(function () {
