@@ -2,6 +2,26 @@
 
 This is a list of manually mantained changes nad updates for each version.
 
+## Version 0.5.0
+
+## Added
+
+None
+
+## Changed
+
+#### gzip response is only when requested by request header
+
+## Deprecated
+
+None
+
+## Removed
+
+None
+
+***
+
 ## Version 0.4.3
 
 ## Added 
