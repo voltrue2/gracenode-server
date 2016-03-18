@@ -1,5 +1,7 @@
 # Server Module
 
+**WARNING**: `gracenode-server` supports up to `gracenode` version `2.5.3`
+
 Server module for gracenode framework that allows you to structurely handle HTTP/HTTPS requests.
 
 This is designed to function within gracenode framework.
